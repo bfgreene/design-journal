@@ -35,8 +35,7 @@ class PhotoViewController: UIViewController {
         
         let filePath = documentsURL.appendingPathComponent("\(pathEnding).png")
         
-        //check if path exists.. will crash shouldn't tho
-        //from here
+        //check if path exists.. will crash
         do {
             let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
             
@@ -48,7 +47,6 @@ class PhotoViewController: UIViewController {
         } catch {
             print("Error: could not save image")
         }
-        // to here
         
         //create image data and write to filePath
         do {
