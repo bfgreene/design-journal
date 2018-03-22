@@ -59,7 +59,7 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
             
             if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
                 let imagePicker = UIImagePickerController()
-                imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+                imagePicker.delegate = self 
                 imagePicker.sourceType = .photoLibrary
                 imagePicker.allowsEditing = true
                 self.present(imagePicker, animated: true, completion: nil)

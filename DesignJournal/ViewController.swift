@@ -94,7 +94,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
 }
 
-
+/** Not needed ... maybe later if I switch to custom UserDefault Object
 struct ImageInfo {
     let path: String
     //var tags: Array<String>
@@ -103,4 +103,4 @@ struct ImageInfo {
 struct ImagesData {
     static var images: Array<ImageInfo> = []
 }
-
+*/

@@ -58,8 +58,8 @@ class PhotoViewController: UIViewController {
         }
         
     
-        let newImage:ImageInfo = ImageInfo(path: filePath.path)
-        ImagesData.images.append(newImage)
+       // let newImage:ImageInfo = ImageInfo(path: filePath.path)
+       // ImagesData.images.append(newImage)
         
         let defaults = UserDefaults.standard
         var storedPaths = defaults.object(forKey: "images") as? [String] ?? [String]()
