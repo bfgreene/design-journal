@@ -10,9 +10,10 @@ import UIKit
 
 class swatchCell: UITableViewCell  {
     
+    
+    @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var colorLabel: UILabel!
     var color: UIColor!
-    
     
 }
 
@@ -26,19 +27,12 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     
     var fakeColors: [UIColor] = [UIColor.blue, UIColor.magenta, UIColor.purple]
     
-    var numRows = 1
+    var tableCells: [swatchCell] = []
     
-    
+    var numRows = 0
     @IBOutlet var addRowButton: UIButton!
     
-    func handleTap(withSender gestureRecognizer: UITapGestureRecognizer) {
-        var point: CGPoint?
-        if gestureRecognizer.state == UIGestureRecognizerState.recognized {
-            point = gestureRecognizer.location(in: gestureRecognizer.view)
-        }
-        
-        colorBarView.backgroundColor = getPixelColorAtPoint(point: point!, sourceView: imageView)
-    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,12 +50,25 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         view.addSubview(palettePreview)
         
     }
+    
+    func handleTap(withSender gestureRecognizer: UITapGestureRecognizer) {
+        var point: CGPoint?
+        if gestureRecognizer.state == UIGestureRecognizerState.recognized {
+            point = gestureRecognizer.location(in: gestureRecognizer.view)
+        }
+        
+        colorBarView.backgroundColor = getPixelColorAtPoint(point: point!, sourceView: imageView)
+        addRowButton.backgroundColor = getPixelColorAtPoint(point: point!, sourceView: imageView)
+    }
 
     @IBAction func addSwatchRow(_ sender: Any) {
         let indexPath: IndexPath = IndexPath(row: numRows, section: 0)
         numRows += 1
         
+        table.beginUpdates()
         table.insertRows(at: [indexPath], with: .automatic)
+        table.endUpdates()
+        table.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     
@@ -125,28 +132,48 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "swatchCell")! as! swatchCell
         
-        cell.color = colorBarView.backgroundColor
-        cell.colorLabel.backgroundColor = cell.color
+       
         
-        
-        cell.textLabel?.text = String("#towel")
-        cell.textLabel?.textAlignment = NSTextAlignment(rawValue: 0)!
-        
-        let borderView: UIView = UIView()
-        borderView.layer.borderColor = UIColor.white.cgColor
-        borderView.layer.borderWidth = 1
-        borderView.layer.backgroundColor = UIColor.clear.cgColor
-        cell.selectedBackgroundView = borderView
-        
-        return cell
-        
+        if indexPath.row < tableCells.count {
+            
+            return tableCells[indexPath.row]
+            
+        } else {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "swatchCell")! as! swatchCell
+            
+            cell.color = colorBarView.backgroundColor
+            cell.colorLabel.backgroundColor = cell.color
+            
+            let rgb = getRGB(color: cell.color)
+            let colorString = "RGB:  \(rgb[0]), \(rgb[1]), \(rgb[2])"
+            cell.descriptionLabel?.text = String(colorString)
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            
+            tableCells.append(cell)
+            
+            return cell
+        }
     }
     
     
-    
-    
+    func getRGB(color: UIColor) -> [Int] {
+        var red: CGFloat = 0.0
+        var green: CGFloat = 0.0
+        var blue: CGFloat = 0.0
+        var alpha: CGFloat = 0.0
+        var rgb: [Int] = []
+        if color.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            rgb.append(Int(red * 255))
+            rgb.append(Int(green * 255))
+            rgb.append(Int(blue * 255))
+            //rgb.append(Int(alpha * 255))
+        } else {
+            rgb = [0,0,0]
+        }
+        return rgb
+    }
     
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
