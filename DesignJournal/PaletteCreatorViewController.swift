@@ -9,45 +9,40 @@
 import UIKit
 
 class swatchCell: UITableViewCell  {
-    
-    
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var colorLabel: UILabel!
     var color: UIColor!
-    
 }
 
 class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDataSource {
     
     @IBOutlet var imageView: UIImageView!
-    @IBOutlet var colorBarView: UIView!
     @IBOutlet var table: UITableView!
+    
     var palettePreview: UIView!
     var change = false
     
-    var fakeColors: [UIColor] = [UIColor.blue, UIColor.magenta, UIColor.purple]
-    
-    var tableCells: [swatchCell] = []
-    
-    var numRows = 0
+    var colors: [UIColor] = []
     @IBOutlet var addRowButton: UIButton!
-    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         imageView.image = UIImage(named: "dtla-pink")
-        
         imageView.backgroundColor = UIColor.black
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(withSender: )))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
         
-        palettePreview = UIView(frame: CGRect(x: 0, y: 20, width: 400, height: 30 ))
+        let screenSize = UIScreen.main.bounds
+        palettePreview = UIView(frame: CGRect(x: 0, y: 20, width: screenSize.width, height: 30 ))
         setPalettePreview(colors: [UIColor.white,UIColor.lightGray, UIColor.darkGray, UIColor.black])
         view.addSubview(palettePreview)
+        
+        table.separatorStyle = UITableViewCellSeparatorStyle.none
+        addRowButton.backgroundColor = UIColor.white
         
     }
     
@@ -57,13 +52,12 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
             point = gestureRecognizer.location(in: gestureRecognizer.view)
         }
         
-        colorBarView.backgroundColor = getPixelColorAtPoint(point: point!, sourceView: imageView)
         addRowButton.backgroundColor = getPixelColorAtPoint(point: point!, sourceView: imageView)
     }
 
-    @IBAction func addSwatchRow(_ sender: Any) {
-        let indexPath: IndexPath = IndexPath(row: numRows, section: 0)
-        numRows += 1
+    @IBAction func addSwatchRow(_ sender: UIButton) {
+        let indexPath: IndexPath = IndexPath(row: colors.count, section: 0)
+        colors.append(sender.backgroundColor!)
         
         table.beginUpdates()
         table.insertRows(at: [indexPath], with: .automatic)
@@ -75,7 +69,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     
     
     /**
-        make sure to remove sublayers before calling again(if user adds/changes selections)
+     TODO: make sure to remove sublayers before calling again(if user adds/changes selections)
     */
     func setPalettePreview(colors: [UIColor]) {
         let gradientLayer = CAGradientLayer()
@@ -128,35 +122,36 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
      TableViewDataSource Methods
     */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return numRows
+        return colors.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-       
+        let cell = tableView.dequeueReusableCell(withIdentifier: "swatchCell")! as! swatchCell
         
-        if indexPath.row < tableCells.count {
-            
-            return tableCells[indexPath.row]
-            
-        } else {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "swatchCell")! as! swatchCell
-            
-            cell.color = colorBarView.backgroundColor
-            cell.colorLabel.backgroundColor = cell.color
-            
-            let rgb = getRGB(color: cell.color)
-            let colorString = "RGB:  \(rgb[0]), \(rgb[1]), \(rgb[2])"
-            cell.descriptionLabel?.text = String(colorString)
-            cell.selectionStyle = UITableViewCellSelectionStyle.none
-            
-            tableCells.append(cell)
-            
-            return cell
-        }
+        cell.color = colors[indexPath.row]
+        cell.colorLabel.backgroundColor = cell.color
+        
+        let rgb = getRGB(color: cell.color)
+        cell.descriptionLabel?.text = "RGB:  \(rgb[0]), \(rgb[1]), \(rgb[2])"
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        
+        return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            table.beginUpdates()
+            colors.remove(at: indexPath.row)
+            table.deleteRows(at: [indexPath], with: .left)
+            table.endUpdates()
+        }
+    }
     
     func getRGB(color: UIColor) -> [Int] {
         var red: CGFloat = 0.0
