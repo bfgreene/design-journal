@@ -20,6 +20,7 @@
 		B5743FD4205748FE00E403D3 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5743FD3205748FE00E403D3 /* CameraViewController.swift */; };
 		B57B47C02058959B00B77CAD /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57B47BF2058959B00B77CAD /* ImageDetailViewController.swift */; };
 		B57B47C22059EBD300B77CAD /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57B47C12059EBD300B77CAD /* PhotoViewController.swift */; };
+		B59D0F0C206D9A3300732284 /* PalettesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59D0F0B206D9A3300732284 /* PalettesViewController.swift */; };
 		B5D19D1E20630B5F0013E9BE /* PaletteCreatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */; };
 		B5D19D202063F5650013E9BE /* PaletteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,7 @@
 		B5743FD3205748FE00E403D3 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		B57B47BF2058959B00B77CAD /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		B57B47C12059EBD300B77CAD /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		B59D0F0B206D9A3300732284 /* PalettesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalettesViewController.swift; sourceTree = "<group>"; };
 		B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCreatorViewController.swift; sourceTree = "<group>"; };
 		B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +122,7 @@
 				B5743FD3205748FE00E403D3 /* CameraViewController.swift */,
 				B57B47C12059EBD300B77CAD /* PhotoViewController.swift */,
 				B57B47BF2058959B00B77CAD /* ImageDetailViewController.swift */,
+				B59D0F0B206D9A3300732284 /* PalettesViewController.swift */,
 				B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */,
 				B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */,
 				B50FBE4720534E9000DB8032 /* Main.storyboard */,
@@ -291,6 +294,7 @@
 				B57B47C02058959B00B77CAD /* ImageDetailViewController.swift in Sources */,
 				B50FBE4420534E9000DB8032 /* AppDelegate.swift in Sources */,
 				B5743FD22056EF9600E403D3 /* TabBarController.swift in Sources */,
+				B59D0F0C206D9A3300732284 /* PalettesViewController.swift in Sources */,
 				B57B47C22059EBD300B77CAD /* PhotoViewController.swift in Sources */,
 				B50E612820547A86009C41BB /* CustomCollectionViewCell.swift in Sources */,
 				B5743FD4205748FE00E403D3 /* CameraViewController.swift in Sources */,

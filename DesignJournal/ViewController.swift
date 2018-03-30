@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -27,10 +26,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        let count = ImagesData.images.count
-//        imagesDataLabel.text = "ImagesData: \(count)"
+        
+        //TODO: instead of reloading on willAppear, only reload if data has changed.. or hopefully add new data without reloading old data that changed
         imagesFromDefaults = UserDefaults.standard.stringArray(forKey: "images") ?? [String]()
         collectionView.reloadData()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -45,7 +45,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CustomCollectionViewCell
-        
         
         let filePath = imagesFromDefaults[indexPath.row]
         if FileManager.default.fileExists(atPath: filePath) {
@@ -93,14 +92,3 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     
 }
-
-/** Not needed ... maybe later if I switch to custom UserDefault Object
-struct ImageInfo {
-    let path: String
-    //var tags: Array<String>
-}
-
-struct ImagesData {
-    static var images: Array<ImageInfo> = []
-}
-*/

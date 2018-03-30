@@ -139,7 +139,6 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         return cell
     }
     
-    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -153,6 +152,8 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         }
     }
     
+    
+    //maybe turn return value into tuple? more clear?
     func getRGB(color: UIColor) -> [Int] {
         var red: CGFloat = 0.0
         var green: CGFloat = 0.0
@@ -169,6 +170,27 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         }
         return rgb
     }
+    
+    //TODO: don't allow save if not at least one color in colors
+    @IBAction func savePalette(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        var storedPalettes = defaults.object(forKey: "palettes") as? [[String]] ?? [[String]]()
+        
+        let colorsRGB = colors.map({ (value:UIColor) -> [Int] in
+            return getRGB(color: value)
+        })
+        let colorsHex = colorsRGB.map({ (value: [Int]) -> String in
+            var hex = String(format: "%2x", value[0])
+            hex += String(format: "%2x", value[1])
+            hex += String(format: "%2x", value[2])
+            return hex
+        })
+        print(colorsHex)
+        storedPalettes.append(colorsHex)
+        defaults.set(storedPalettes, forKey: "palettes")
+    }
+    
+    
     
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)

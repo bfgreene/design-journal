@@ -24,10 +24,9 @@ class PhotoViewController: UIViewController {
     
     
     @IBAction func savePhoto(_ sender: Any) {
+        
         let fileManager = FileManager.default
-        
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
         let documentPath = documentsURL.path
         
         let date = Date()
@@ -54,7 +53,7 @@ class PhotoViewController: UIViewController {
                 try pngImageData.write(to: filePath, options: .atomic)
             }
         } catch {
-            print("couldn't write image")
+            print("Error: could not write image")
         }
         
     
