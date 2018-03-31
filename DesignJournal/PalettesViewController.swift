@@ -13,7 +13,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     
 
     @IBOutlet var palettesTableView: UITableView!
-    var palettesFromDefaults = [[String]]()
+    var palettesFromDefaults = [[NSData]]()
     var numPalettes = 0
     
     override func viewDidLoad() {
@@ -22,7 +22,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
         let defaults = UserDefaults.standard
         defaults.set([], forKey: "palettes")
         
-        palettesFromDefaults = (UserDefaults.standard.array(forKey: "palettes") as? [[String]])!
+        palettesFromDefaults = (UserDefaults.standard.array(forKey: "palettes") as? [[NSData]])!
         numPalettes = palettesFromDefaults.count
         
     }
@@ -30,7 +30,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let updatedPalettes = UserDefaults.standard.array(forKey: "palettes") as? [[String]]
+        let updatedPalettes = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]
         if (updatedPalettes?.count)! > numPalettes {
             palettesFromDefaults = updatedPalettes!
             palettesTableView.reloadData()
@@ -46,42 +46,53 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
+
+        var cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
         
-        let colorString = palettesFromDefaults[indexPath.row][0]
-        cell.textLabel?.text = colorString
-    
-        //r
-        var start = colorString.index(colorString.startIndex, offsetBy: 0)
-        var end = colorString.index(colorString.startIndex, offsetBy: 2)
-        var range = start..<end
-        let r =  colorString.substring(with: range)
-        let intR = Int(r, radix:16)
-        let floatR: CGFloat = CGFloat(Double(intR!) / 255.0)
-        //g
-        start = colorString.index(colorString.startIndex, offsetBy: 2)
-        end = colorString.index(colorString.startIndex, offsetBy: 4)
-        range = start..<end
-        let g =  colorString.substring(with: range)
-        let intG = Int(g, radix:16)
-        let floatG: CGFloat = CGFloat(Double(intG!) / 255.0)
-        //b
-        start = colorString.index(colorString.startIndex, offsetBy: 4)
-        end = colorString.index(colorString.startIndex, offsetBy: 6)
-        range = start..<end
-        let b =  colorString.substring(with: range)
-        let intB = Int(b, radix:16)
-        let floatB: CGFloat = CGFloat(Double(intB!) / 255.0)
+        let palette = palettesFromDefaults[indexPath.row].map({(color: NSData) -> UIColor in
+            return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
+        })
         
-        
-        let bgColor = UIColor.init(red: floatR, green: floatG, blue: floatB, alpha: 1)
-        cell.backgroundColor = bgColor
-        
+       // let c1 = palette[0]
+       // cell.backgroundColor = c1
+        cell.paletteView = UIView(frame: CGRect(origin: cell.frame.origin, size: cell.frame.size))
+        cell.paletteView.contentMode = UIViewContentMode.scaleAspectFit
+        cell = setPaletteView(cell: cell, colors: palette)
+        cell.backgroundColor = UIColor.lightGray
+        cell.addSubview(cell.paletteView)
         return cell
     }
     
     
-    
+    /**
+     TODO: make sure to remove sublayers before calling again(if user adds/changes selections)
+     */
+    func setPaletteView(cell: paletteCell, colors: [UIColor]) -> paletteCell{
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = cell.paletteView.bounds
+        
+        var colorArray: [CGColor] = []
+        var locationArray: [NSNumber] = []
+        for(index, color) in colors.enumerated() {
+            colorArray.append(color.cgColor)
+            colorArray.append(color.cgColor)
+            locationArray.append(NSNumber(value: (1.0 / Double(colors.count)) * Double(index)))
+            locationArray.append(NSNumber(value: (1.0 / Double(colors.count)) * Double(index + 1)))
+        }
+        
+        gradientLayer.colors = colorArray
+        gradientLayer.locations = locationArray
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        
+        
+        cell.paletteView.backgroundColor = UIColor.clear
+        cell.paletteView.layer.addSublayer(gradientLayer)
+        
+        cell.paletteView.layer.masksToBounds = true
+        
+        return cell
+    }
     
     
     override func didReceiveMemoryWarning() {
@@ -106,4 +117,5 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
 class paletteCell: UITableViewCell {
     var colors: [UIColor]!
     var colorsHex: [String]!
+    var paletteView: UIView!
 }

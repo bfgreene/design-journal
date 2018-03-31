@@ -171,11 +171,8 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         return rgb
     }
     
-    //TODO: don't allow save if not at least one color in colors
-    @IBAction func savePalette(_ sender: Any) {
-        let defaults = UserDefaults.standard
-        var storedPalettes = defaults.object(forKey: "palettes") as? [[String]] ?? [[String]]()
-        
+    
+    func toHexArray(colors: [UIColor]) -> [String] {
         let colorsRGB = colors.map({ (value:UIColor) -> [Int] in
             return getRGB(color: value)
         })
@@ -185,11 +182,26 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
             hex += String(format: "%2x", value[2])
             return hex
         })
-        print(colorsHex)
-        storedPalettes.append(colorsHex)
-        defaults.set(storedPalettes, forKey: "palettes")
+        return colorsHex
     }
     
+    //TODO: don't allow save if not at least one color in colors
+    @IBAction func savePalette(_ sender: Any) {
+        
+        let colorsData = colors.map({ (color:UIColor) -> NSData in
+            return NSKeyedArchiver.archivedData(withRootObject: color) as NSData
+        })
+        
+        
+        let defaults = UserDefaults.standard
+        var storedPalettes = defaults.object(forKey: "palettes") as? [[NSData]] ?? [[NSData]]()
+        
+       
+        storedPalettes.append(colorsData)
+        defaults.set(storedPalettes, forKey: "palettes")
+        
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
     @IBAction func goBack(_ sender: Any) {
