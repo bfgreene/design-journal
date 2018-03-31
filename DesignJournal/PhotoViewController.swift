@@ -92,6 +92,12 @@ class PhotoViewController: UIViewController {
         }
     }
     
+    @IBAction func makePalette(_ sender: Any) {
+        //send image to paletteCreatorVC
+        self.performSegue(withIdentifier: "segueToPaletteCreator", sender: self)
+    }
+    
+    
     
     @IBAction func goBack(_ sender: Any) {
         //clearImageCache() //if uncommenting, also clear userdefaults "images" array
@@ -104,14 +110,16 @@ class PhotoViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "segueToPaletteCreator",
+            let nextScene = segue.destination as? PaletteCreatorViewController {
+            nextScene.imageFromPhoto.image = self.imageView.image
+        }
     }
-    */
+    
 
 }

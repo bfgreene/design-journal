@@ -19,6 +19,8 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var table: UITableView!
     
+    var imageFromPhoto = UIImageView()
+    
     var palettePreview: UIView!
     var change = false
     
@@ -28,8 +30,13 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        imageView.image = UIImage(named: "dtla-pink")
+        
+        if let photo = imageFromPhoto.image{
+            imageView.image = photo
+        } else {
+            imageView.image = UIImage(named: "dtla-pink")
+        }
+        
         imageView.backgroundColor = UIColor.black
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(withSender: )))

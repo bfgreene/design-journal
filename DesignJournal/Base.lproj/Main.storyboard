@@ -294,6 +294,15 @@
                                     <action selector="goBack:" destination="Ryw-Bf-cBY" eventType="touchUpInside" id="ZrE-pQ-xxc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rea-0U-RDo">
+                                <rect key="frame" x="143" y="633" width="89" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Make Palette"/>
+                                <connections>
+                                    <action selector="makePalette:" destination="Ryw-Bf-cBY" eventType="touchUpInside" id="3JY-QK-otQ"/>
+                                    <segue destination="YWx-Pp-q2O" kind="show" identifier="segueToPaletteCreator" id="60c-yC-4Za"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
@@ -304,7 +313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PBG-Kn-yaG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3380" y="833.43328335832086"/>
+            <point key="canvasLocation" x="3502" y="822"/>
         </scene>
         <!--Palettes-->
         <scene sceneID="5aw-1b-4pO">
@@ -330,11 +339,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="paletteCell" rowHeight="60" id="nrH-2G-wF1" customClass="paletteCell" customModule="DesignJournal" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="60"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="paletteCell" id="nrH-2G-wF1" customClass="paletteCell" customModule="DesignJournal" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nrH-2G-wF1" id="gWt-Pj-c55">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -557,6 +566,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="YZU-1m-dD0"/>
+        <segue reference="BVr-Mq-JLN"/>
+        <segue reference="UkO-8X-y5P"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,8 +19,8 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults.standard
-        defaults.set([], forKey: "palettes")
+       // let defaults = UserDefaults.standard
+        //defaults.set([], forKey: "palettes")
         
         palettesFromDefaults = (UserDefaults.standard.array(forKey: "palettes") as? [[NSData]])!
         numPalettes = palettesFromDefaults.count
@@ -53,15 +53,20 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
             return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
         })
         
-       // let c1 = palette[0]
-       // cell.backgroundColor = c1
         cell.paletteView = UIView(frame: CGRect(origin: cell.frame.origin, size: cell.frame.size))
-        cell.paletteView.contentMode = UIViewContentMode.scaleAspectFit
+       // cell.paletteView.contentMode = UIViewContentMode.scaleAspectFit
         cell = setPaletteView(cell: cell, colors: palette)
         cell.backgroundColor = UIColor.lightGray
         cell.addSubview(cell.paletteView)
+        
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension * 2
+    }
+
+    
     
     
     /**
