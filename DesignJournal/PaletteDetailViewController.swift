@@ -8,28 +8,47 @@
 
 import UIKit
 
-class PaletteDetailViewController: UIViewController {
-
+class PaletteDetailViewController: UIViewController, UITableViewDataSource {
+    
+    
+    
+    @IBOutlet var swatchesTableView: UITableView!
+    var palette = [UIColor]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func goBack(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    //UITableViewDataSource Methods
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return palette.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = swatchesTableView.dequeueReusableCell(withIdentifier: "swatchDetailCell") as! swatchDetailCell
+        cell.colorLabel.backgroundColor = palette[indexPath.row]
+        
+        return cell
+    }
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+  
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
 
+}
+
+class swatchDetailCell: UITableViewCell {
+    
+    @IBOutlet var colorLabel: UILabel!
+    
+    
 }

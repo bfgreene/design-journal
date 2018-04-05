@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PalettesViewController: UIViewController, UITableViewDataSource {
+class PalettesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
 
@@ -54,6 +54,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
         
 
         let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         
         //should I do this everytime cell is set or just once somewhere?
         let palette = palettesFromDefaults[indexPath.row].map({(color: NSData) -> UIColor in
@@ -94,6 +95,16 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
             palettesTableView.endUpdates()
         }
     }
+    
+    //UITableView Delegate Methods
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "segueToPaletteDetail", sender: self.palettesTableView.cellForRow(at: indexPath))
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
 
     
     override func didReceiveMemoryWarning() {
@@ -103,8 +114,10 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToPaletteDetail" {
-            //let paletteDetailVC = segue.destination as! PaletteDetailViewController
-            
+            let paletteDetailVC = segue.destination as! PaletteDetailViewController
+            let cell = sender as! paletteCell
+            let colors = cell.swatchCells[0].backgroundColor
+            paletteDetailVC.palette = [colors!]
         }
     }
 
