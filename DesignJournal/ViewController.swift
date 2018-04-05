@@ -90,5 +90,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         cell.cellImageView.layer.opacity = 1.0
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        if segue.identifier ==  "segueToImageDetail" {
+            if let selectedCell = collectionView.indexPathsForSelectedItems?.first{
+                let nextScene = segue.destination as! ImageDetailViewController
+                let cell = collectionView.cellForItem(at: selectedCell) as! CustomCollectionViewCell
+                if let image = cell.cellImageView.image {
+                    nextScene.imageFromCollection = image
+                }
+            }
+        }
+    }
 }

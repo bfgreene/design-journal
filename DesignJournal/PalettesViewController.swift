@@ -19,8 +19,8 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // let defaults = UserDefaults.standard
-        //defaults.set([], forKey: "palettes")
+        let defaults = UserDefaults.standard
+        defaults.set([], forKey: "palettes")
         
         palettesFromDefaults = (UserDefaults.standard.array(forKey: "palettes") as? [[NSData]])!
         numPalettes = palettesFromDefaults.count
@@ -31,15 +31,18 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
         super.viewDidAppear(animated)
         
         let updatedPalettes = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]
-        if (updatedPalettes?.count)! > numPalettes {
+        if (updatedPalettes?.count)! != numPalettes {
             palettesFromDefaults = updatedPalettes!
             palettesTableView.reloadData()
+            numPalettes = palettesFromDefaults.count
         }
         
     }
 
     
-    //UITableViewDataSource methods
+    /**
+    *   UITableViewDataSource methods
+    */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return palettesFromDefaults.count
     }
@@ -47,23 +50,61 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
 
-        var cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
+        let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
+        
         
         let palette = palettesFromDefaults[indexPath.row].map({(color: NSData) -> UIColor in
             return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
         })
         
-        cell.paletteView = UIView(frame: CGRect(origin: cell.frame.origin, size: cell.frame.size))
-       // cell.paletteView.contentMode = UIViewContentMode.scaleAspectFit
-        cell = setPaletteView(cell: cell, colors: palette)
-        cell.backgroundColor = UIColor.lightGray
-        cell.addSubview(cell.paletteView)
+        cell.backgroundColor = palette[0]
         
+        /*
+        if cell.paletteView != nil {
+            cell.paletteView.removeFromSuperview()
+        }
+        
+        cell.paletteView = UIView(frame: CGRect(origin: cell.frame.origin, size: cell.frame.size))
+        let gradientLayer = setPaletteView(cell: cell, colors: palette)
+        
+        cell.paletteView.backgroundColor = UIColor.clear
+        cell.paletteView.layer.addSublayer(gradientLayer)
+        cell.paletteView.layer.masksToBounds = true
+        
+        
+        cell.contentView.addSubview(cell.paletteView)
+        */
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension * 2
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            
+            palettesTableView.beginUpdates()
+            
+            let cell = palettesTableView.cellForRow(at: indexPath)
+            let subviews = cell?.contentView.subviews
+            for view in subviews! {
+                view.removeFromSuperview()
+            }
+            
+            //remove from userdefaults
+            let defaults = UserDefaults.standard
+            var palettes = defaults.array(forKey: "palettes")
+            palettes?.remove(at: indexPath.row)
+            defaults.set(palettes, forKey: "palettes")
+            
+            palettesFromDefaults.remove(at: indexPath.row)
+            palettesTableView.deleteRows(at: [indexPath], with: .left)
+            numPalettes -= 1
+            
+            palettesTableView.endUpdates()
+        }
     }
 
     
@@ -72,7 +113,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     /**
      TODO: make sure to remove sublayers before calling again(if user adds/changes selections)
      */
-    func setPaletteView(cell: paletteCell, colors: [UIColor]) -> paletteCell{
+    func setPaletteView(cell: paletteCell, colors: [UIColor]) -> CAGradientLayer{
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = cell.paletteView.bounds
         
@@ -90,13 +131,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         
-        
-        cell.paletteView.backgroundColor = UIColor.clear
-        cell.paletteView.layer.addSublayer(gradientLayer)
-        
-        cell.paletteView.layer.masksToBounds = true
-        
-        return cell
+        return gradientLayer
     }
     
     
