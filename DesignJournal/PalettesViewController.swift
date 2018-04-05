@@ -16,6 +16,9 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     var palettesFromDefaults = [[NSData]]()
     var numPalettes = 0
     
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,28 +55,19 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
 
         let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
         
-        
+        //should I do this everytime cell is set or just once somewhere?
         let palette = palettesFromDefaults[indexPath.row].map({(color: NSData) -> UIColor in
             return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
         })
         
-        cell.backgroundColor = palette[0]
-        
-        /*
-        if cell.paletteView != nil {
-            cell.paletteView.removeFromSuperview()
+        for swatch in cell.swatchCells {
+            if swatch.tag < palette.count {
+                swatch.backgroundColor = palette[swatch.tag]
+            } else {
+                swatch.backgroundColor = UIColor.white
+            }
         }
-        
-        cell.paletteView = UIView(frame: CGRect(origin: cell.frame.origin, size: cell.frame.size))
-        let gradientLayer = setPaletteView(cell: cell, colors: palette)
-        
-        cell.paletteView.backgroundColor = UIColor.clear
-        cell.paletteView.layer.addSublayer(gradientLayer)
-        cell.paletteView.layer.masksToBounds = true
-        
-        
-        cell.contentView.addSubview(cell.paletteView)
-        */
+    
         return cell
     }
     
@@ -86,12 +80,6 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             
             palettesTableView.beginUpdates()
-            
-            let cell = palettesTableView.cellForRow(at: indexPath)
-            let subviews = cell?.contentView.subviews
-            for view in subviews! {
-                view.removeFromSuperview()
-            }
             
             //remove from userdefaults
             let defaults = UserDefaults.standard
@@ -108,48 +96,17 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
     }
 
     
-    
-    
-    /**
-     TODO: make sure to remove sublayers before calling again(if user adds/changes selections)
-     */
-    func setPaletteView(cell: paletteCell, colors: [UIColor]) -> CAGradientLayer{
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = cell.paletteView.bounds
-        
-        var colorArray: [CGColor] = []
-        var locationArray: [NSNumber] = []
-        for(index, color) in colors.enumerated() {
-            colorArray.append(color.cgColor)
-            colorArray.append(color.cgColor)
-            locationArray.append(NSNumber(value: (1.0 / Double(colors.count)) * Double(index)))
-            locationArray.append(NSNumber(value: (1.0 / Double(colors.count)) * Double(index + 1)))
-        }
-        
-        gradientLayer.colors = colorArray
-        gradientLayer.locations = locationArray
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        
-        return gradientLayer
-    }
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "segueToPaletteDetail" {
+            //let paletteDetailVC = segue.destination as! PaletteDetailViewController
+            
+        }
     }
-    */
 
 }
 
@@ -157,5 +114,6 @@ class PalettesViewController: UIViewController, UITableViewDataSource {
 class paletteCell: UITableViewCell {
     var colors: [UIColor]!
     var colorsHex: [String]!
-    var paletteView: UIView!
+    
+    @IBOutlet var swatchCells: [UIView]!
 }
