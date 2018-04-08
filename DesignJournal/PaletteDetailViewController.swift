@@ -8,16 +8,23 @@
 
 import UIKit
 
-class PaletteDetailViewController: UIViewController, UITableViewDataSource {
+class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     
     @IBOutlet var swatchesTableView: UITableView!
     var palette = [UIColor]()
+    var hexStrings = [String]()
+    var rgbValues = [[Int]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        hexStrings = UIColor.toHexArray(colors: palette)
+        rgbValues = palette.map({ (color:UIColor) -> [Int] in
+            return color.getRGB()
+        })
+        
     }
     
     
@@ -25,30 +32,38 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource {
         self.dismiss(animated: true, completion: nil)
     }
     
-    //UITableViewDataSource Methods
+    //   MARK: UITableViewDataSource and Delegate Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return palette.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = swatchesTableView.dequeueReusableCell(withIdentifier: "swatchDetailCell") as! swatchDetailCell
+        
+        cell.selectionStyle = .none
         cell.colorLabel.backgroundColor = palette[indexPath.row]
+        cell.hexLabel.text = "#\(hexStrings[indexPath.row])".uppercased()
+        cell.hexLabel.sizeToFit()
+        for label in cell.rgbLabels {
+            let value = " \(rgbValues[indexPath.row][label.tag])"
+            label.text?.append(value)
+            label.sizeToFit()
+        }
         
         return cell
     }
-
-
-  
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
     }
+    
+    
 
 }
 
 class swatchDetailCell: UITableViewCell {
     
     @IBOutlet var colorLabel: UILabel!
-    
-    
+    @IBOutlet var hexLabel: UILabel!
+    @IBOutlet var rgbLabels: [UILabel]!
 }

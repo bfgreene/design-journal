@@ -31,10 +31,10 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let photo = imageFromPhoto.image{
+        if let photo = imageFromPhoto.image {
             imageView.image = photo
         } else {
-            imageView.image = UIImage(named: "dtla-pink")
+            imageView.image = UIImage(named: "dtla-pink") //backup image
         }
         
         imageView.backgroundColor = UIColor.black
@@ -75,9 +75,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     
     
     
-    /**
-     TODO: make sure to remove sublayers before calling again(if user adds/changes selections)
-    */
+    // TODO: make sure to remove sublayers before calling again(if user adds/changes selections)
     func setPalettePreview(colors: [UIColor]) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = palettePreview.bounds
@@ -99,7 +97,6 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         
         palettePreview.backgroundColor = UIColor.clear
         palettePreview.layer.addSublayer(gradientLayer)
-        
         palettePreview.layer.masksToBounds = true
     }
     
@@ -125,9 +122,8 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     }
     
     
-    /**
-     TableViewDataSource Methods
-    */
+    
+    //   MARK: TableViewDataSource Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return colors.count
     }
@@ -139,7 +135,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         cell.color = colors[indexPath.row]
         cell.colorLabel.backgroundColor = cell.color
         
-        let rgb = getRGB(color: cell.color)
+        let rgb = cell.color.getRGB()
         cell.descriptionLabel?.text = "RGB:  \(rgb[0]), \(rgb[1]), \(rgb[2])"
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         
@@ -157,39 +153,6 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
             table.deleteRows(at: [indexPath], with: .left)
             table.endUpdates()
         }
-    }
-    
-    
-    //maybe turn return value into tuple? more clear?
-    func getRGB(color: UIColor) -> [Int] {
-        var red: CGFloat = 0.0
-        var green: CGFloat = 0.0
-        var blue: CGFloat = 0.0
-        var alpha: CGFloat = 0.0
-        var rgb: [Int] = []
-        if color.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
-            rgb.append(Int(red * 255))
-            rgb.append(Int(green * 255))
-            rgb.append(Int(blue * 255))
-            //rgb.append(Int(alpha * 255))
-        } else {
-            rgb = [0,0,0]
-        }
-        return rgb
-    }
-    
-    
-    func toHexArray(colors: [UIColor]) -> [String] {
-        let colorsRGB = colors.map({ (value:UIColor) -> [Int] in
-            return getRGB(color: value)
-        })
-        let colorsHex = colorsRGB.map({ (value: [Int]) -> String in
-            var hex = String(format: "%2x", value[0])
-            hex += String(format: "%2x", value[1])
-            hex += String(format: "%2x", value[2])
-            return hex
-        })
-        return colorsHex
     }
     
     //TODO: don't allow save if not at least one color in colors
@@ -214,21 +177,6 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -23,6 +23,7 @@
 		B59D0F0C206D9A3300732284 /* PalettesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59D0F0B206D9A3300732284 /* PalettesViewController.swift */; };
 		B5D19D1E20630B5F0013E9BE /* PaletteCreatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */; };
 		B5D19D202063F5650013E9BE /* PaletteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */; };
+		B5EAA505207ACCAB00BED796 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		B59D0F0B206D9A3300732284 /* PalettesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalettesViewController.swift; sourceTree = "<group>"; };
 		B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCreatorViewController.swift; sourceTree = "<group>"; };
 		B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteDetailViewController.swift; sourceTree = "<group>"; };
+		B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = DesignJournal/UIColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		B50FBE3720534E8F00DB8032 = {
 			isa = PBXGroup;
 			children = (
+				B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */,
 				B50FBE4220534E9000DB8032 /* DesignJournal */,
 				B50FBE5A20534E9100DB8032 /* DesignJournalTests */,
 				B50FBE6520534E9100DB8032 /* DesignJournalUITests */,
@@ -298,6 +301,7 @@
 				B57B47C22059EBD300B77CAD /* PhotoViewController.swift in Sources */,
 				B50E612820547A86009C41BB /* CustomCollectionViewCell.swift in Sources */,
 				B5743FD4205748FE00E403D3 /* CameraViewController.swift in Sources */,
+				B5EAA505207ACCAB00BED796 /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

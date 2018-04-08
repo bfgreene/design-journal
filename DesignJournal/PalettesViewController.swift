@@ -11,7 +11,6 @@ import UIKit
 class PalettesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var palettesTableView: UITableView!
-    //var palettesFromDefaults = [[NSData]]()
     var palettesFromDefaults = [[UIColor]]()
     var numPalettes = 0
     
@@ -41,9 +40,8 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     
-    /**
-    *   UITableViewDataSource methods
-    */
+    
+    //   MARK: UITableViewDataSource methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return palettesFromDefaults.count
     }
@@ -51,12 +49,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
-        
-        //should I do this everytime cell is set or just once somewhere?
-//        let palette = palettesFromDefaults[indexPath.row].map({(color: NSData) -> UIColor in
-//            return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
-//        })
+        cell.selectionStyle = .none
 
         let palette = palettesFromDefaults[indexPath.row]
         
@@ -95,12 +88,15 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    //UITableView Delegate Methods
+    //   MARK: UITableView Delegate Methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "segueToPaletteDetail", sender: self.palettesTableView.cellForRow(at: indexPath))
         }
-        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65.0
     }
     
 
