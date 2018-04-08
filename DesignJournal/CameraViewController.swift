@@ -81,7 +81,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 let photoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoViewController
                 photoVC.newPhoto = image
                 DispatchQueue.main.async {
-                    self.present(photoVC, animated: true, completion: {
+                    self.present(photoVC, animated: false, completion: {
                         self.stopCaptureSession()
                     })
                 }

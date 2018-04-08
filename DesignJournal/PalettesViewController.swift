@@ -10,32 +10,30 @@ import UIKit
 
 class PalettesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
-
     @IBOutlet var palettesTableView: UITableView!
-    var palettesFromDefaults = [[NSData]]()
+    //var palettesFromDefaults = [[NSData]]()
+    var palettesFromDefaults = [[UIColor]]()
     var numPalettes = 0
     
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let defaults = UserDefaults.standard
-        defaults.set([], forKey: "palettes")
+       // let defaults = UserDefaults.standard
+       // defaults.set([], forKey: "palettes")
         
-        palettesFromDefaults = (UserDefaults.standard.array(forKey: "palettes") as? [[NSData]])!
+        palettesFromDefaults = updatePalettesData()
         numPalettes = palettesFromDefaults.count
         
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         let updatedPalettes = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]
         if (updatedPalettes?.count)! != numPalettes {
-            palettesFromDefaults = updatedPalettes!
+            palettesFromDefaults = updatePalettesData()
             palettesTableView.reloadData()
             numPalettes = palettesFromDefaults.count
         }
@@ -52,14 +50,15 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-
         let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         
         //should I do this everytime cell is set or just once somewhere?
-        let palette = palettesFromDefaults[indexPath.row].map({(color: NSData) -> UIColor in
-            return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
-        })
+//        let palette = palettesFromDefaults[indexPath.row].map({(color: NSData) -> UIColor in
+//            return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
+//        })
+
+        let palette = palettesFromDefaults[indexPath.row]
         
         for swatch in cell.swatchCells {
             if swatch.tag < palette.count {
@@ -102,22 +101,30 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
             self.performSegue(withIdentifier: "segueToPaletteDetail", sender: self.palettesTableView.cellForRow(at: indexPath))
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func updatePalettesData() -> [[UIColor]] {
+        let palettesAsData = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]!
+        var palettesAsColors = [[UIColor]]()
+        if palettesAsData != nil {
+            for index in palettesAsData!.indices {
+                let unarchivedPalette = palettesAsData![index].map({(color: NSData) -> UIColor in
+                    return (NSKeyedUnarchiver.unarchiveObject(with: color as Data) as? UIColor)!
+                })
+                palettesAsColors.append(unarchivedPalette)
+            }
+        }
+        return palettesAsColors
     }
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueToPaletteDetail" {
+        if segue.identifier == "segueToPaletteDetail",
+        let indexPath = self.palettesTableView.indexPathForSelectedRow {
             let paletteDetailVC = segue.destination as! PaletteDetailViewController
-            let cell = sender as! paletteCell
-            let colors = cell.swatchCells[0].backgroundColor
-            paletteDetailVC.palette = [colors!]
+            paletteDetailVC.palette = palettesFromDefaults[indexPath.row]
         }
     }
 
@@ -129,4 +136,6 @@ class paletteCell: UITableViewCell {
     var colorsHex: [String]!
     
     @IBOutlet var swatchCells: [UIView]!
+    
+    
 }

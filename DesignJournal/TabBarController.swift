@@ -61,7 +61,6 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
                 let imagePicker = UIImagePickerController()
                 imagePicker.delegate = self 
                 imagePicker.sourceType = .photoLibrary
-                imagePicker.allowsEditing = true
                 self.present(imagePicker, animated: true, completion: nil)
             }
             
@@ -71,16 +70,6 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         alertController.addAction(photosAction)
         
         self.present(alertController, animated: true) {}
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueToCamera" {
-            /** send information***
-            if let destination = segue.destination as? Modo1ViewController {
-                destination.nomb = nombres // you can pass value to destination view controller
-            }
-            */
-        }
     }
 
     func goToPhotoVC() {
@@ -98,21 +87,5 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         dismiss(animated: true, completion: nil)
         goToPhotoVC()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

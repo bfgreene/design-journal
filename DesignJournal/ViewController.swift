@@ -32,11 +32,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         collectionView.reloadData()
         
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imagesFromDefaults.count
@@ -49,28 +44,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let filePath = imagesFromDefaults[indexPath.row]
         if FileManager.default.fileExists(atPath: filePath) {
             let contentsOfFilePath = UIImage(contentsOfFile: filePath)
-            cell.cellImageView.image = contentsOfFilePath
+            let rotatedImage = UIImage(cgImage: (contentsOfFilePath?.cgImage)!, scale: 1.0, orientation: .right) //PNGs not auto-rotated
+            cell.cellImageView.image = rotatedImage
         }
         
         return cell
     }
 
-    
-    
-   /**
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // handle tap events
-        print("You selected cell #\(indexPath.item)!")
-    }
-    */
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Compute the dimension of a cell for an NxN layout with space S between
-        // cells.  Take the collection view's width, subtract (N-1)*S points for
-        // the spaces between the cells, and then divide by N to find the final
-        // dimension for the cell's width and height.
-        
+        //Calculations to find cell width for n cells/row, here n=3
         let cellsAcross: CGFloat = 3
         let spaceBetweenCells: CGFloat = 1
         let dim = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
@@ -91,8 +74,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+
         if segue.identifier ==  "segueToImageDetail" {
             if let selectedCell = collectionView.indexPathsForSelectedItems?.first{
                 let nextScene = segue.destination as! ImageDetailViewController

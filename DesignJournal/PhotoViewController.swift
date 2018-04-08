@@ -27,25 +27,24 @@ class PhotoViewController: UIViewController {
         
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let documentPath = documentsURL.path
+//      let documentPath = documentsURL.path
         
-        let date = Date()
-        let pathEnding: Int = Int(date.timeIntervalSince1970)
-        
+    
+        let pathEnding: Int = Int(Date().timeIntervalSince1970)
         let filePath = documentsURL.appendingPathComponent("\(pathEnding).png")
         
         //check if path exists.. will crash
-        do {
-            let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
-            
-            for file in files {
-                if "\(documentPath)/\(file)" == filePath.path {
-                    try fileManager.removeItem(atPath: filePath.path)
-                }
-            }
-        } catch {
-            print("Error: could not save image")
-        }
+//        do {
+//            let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
+//
+//            for file in files {
+//                if "\(documentPath)/\(file)" == filePath.path {
+//                    try fileManager.removeItem(atPath: filePath.path)
+//                }
+//            }
+//        } catch {
+//            print("Error: could not save image")
+//        }
         
         //create image data and write to filePath
         do {
@@ -56,26 +55,18 @@ class PhotoViewController: UIViewController {
             print("Error: could not write image")
         }
         
-    
-       // let newImage:ImageInfo = ImageInfo(path: filePath.path)
-       // ImagesData.images.append(newImage)
         
         let defaults = UserDefaults.standard
         var storedPaths = defaults.object(forKey: "images") as? [String] ?? [String]()
         storedPaths.append(filePath.path)
         
         defaults.set(storedPaths, forKey: "images")
-        //defaults.synchronize()
         
-        //do segue to gallery
-        //self.dismiss(animated: true, completion: nil)
         self.performSegue(withIdentifier: "segueToJournal", sender: self)
-        //then maybe go back to gallery too.. briefly display "saved" icon
     }
     
     
     //clear all files from directory.. move somewhere or use delete part
-    //@IBAction func clearImagesCache(_ sender: Any) {
     func clearImageCache() {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -104,17 +95,8 @@ class PhotoViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "segueToPaletteCreator",
             let nextScene = segue.destination as? PaletteCreatorViewController {
             nextScene.imageFromPhoto.image = self.imageView.image
