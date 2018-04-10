@@ -66,4 +66,6 @@ class swatchDetailCell: UITableViewCell {
     @IBOutlet var colorLabel: UILabel!
     @IBOutlet var hexLabel: UILabel!
     @IBOutlet var rgbLabels: [UILabel]!
+    
+    @IBOutlet var cmykLabels: [UILabel]!
 }

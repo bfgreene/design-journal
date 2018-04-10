@@ -25,26 +25,33 @@ class PhotoViewController: UIViewController {
     
     @IBAction func savePhoto(_ sender: Any) {
         
+        let alertController = UIAlertController(title: nil, message: "Select a Tag:", preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        let logoAction = UIAlertAction(title: "Logo", style: .default) { _ in self.writeImageData(withTag: "logo")}
+        let typefaceAction = UIAlertAction(title: "Typeface", style: .default){ _ in self.writeImageData(withTag: "typeface") }
+        let textureAction = UIAlertAction(title: "Texture", style: .default){ _ in self.writeImageData(withTag: "texture")}
+        let layoutAction = UIAlertAction(title: "Layout", style: .default){ _ in self.writeImageData(withTag: "layout")}
+        let interfaceAction = UIAlertAction(title: "Interface", style: .default){ _ in self.writeImageData(withTag: "interface")}
+        let noneAction = UIAlertAction(title: "None", style: .default){ _ in self.writeImageData(withTag: "none")}
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(logoAction)
+        alertController.addAction(typefaceAction)
+        alertController.addAction(textureAction)
+        alertController.addAction(layoutAction)
+        alertController.addAction(interfaceAction)
+        alertController.addAction(noneAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+        
+    func writeImageData(withTag tag: String) {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-//      let documentPath = documentsURL.path
-        
     
         let pathEnding: Int = Int(Date().timeIntervalSince1970)
         let filePath = documentsURL.appendingPathComponent("\(pathEnding).png")
-        
-        //check if path exists.. will crash
-//        do {
-//            let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
-//
-//            for file in files {
-//                if "\(documentPath)/\(file)" == filePath.path {
-//                    try fileManager.removeItem(atPath: filePath.path)
-//                }
-//            }
-//        } catch {
-//            print("Error: could not save image")
-//        }
         
         //create image data and write to filePath
         do {
@@ -57,11 +64,15 @@ class PhotoViewController: UIViewController {
         
         
         let defaults = UserDefaults.standard
-        var storedPaths = defaults.object(forKey: "images") as? [String] ?? [String]()
-        storedPaths.append(filePath.path)
         
-        defaults.set(storedPaths, forKey: "images")
+        var pathEndings = defaults.object(forKey: "pathEndings") as? [Int] ?? [Int]()
+        pathEndings.append(pathEnding)
+        defaults.set(pathEndings, forKey: "pathEndings")
         
+        var tags = defaults.object(forKey: "tags") as? [String] ?? [String]()
+        tags.append(tag)
+        defaults.set(tags, forKey: "tags")
+    
         self.performSegue(withIdentifier: "segueToJournal", sender: self)
     }
     
@@ -89,7 +100,6 @@ class PhotoViewController: UIViewController {
     }
     
     
-    
     @IBAction func goBack(_ sender: Any) {
         //clearImageCache() //if uncommenting, also clear userdefaults "images" array
         self.dismiss(animated: true, completion: nil)
@@ -102,6 +112,8 @@ class PhotoViewController: UIViewController {
             nextScene.imageFromPhoto.image = self.imageView.image
         }
     }
+    
+    
     
 
 }

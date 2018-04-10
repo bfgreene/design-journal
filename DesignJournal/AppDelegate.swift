@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //remove next 3 lines when not testing.. rebuilding app removes files but not NSdefaults so it thinks there are images 
         let defaults = UserDefaults.standard
-        let defaultValue:Array<String> = []
-        defaults.set(defaultValue, forKey: "images")
+        defaults.set([Int](), forKey: "pathEndings")
+        defaults.set([String](), forKey: "tags")
         
         return true
     }

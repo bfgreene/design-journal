@@ -11,14 +11,12 @@ import UIKit
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     
-    var imagesFromDefaults: Array<String> = []
+    let pathBeginning = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    var pathEndings = [Int]()
+    var tags = [String]()
     
     @IBOutlet var collectionView: UICollectionView!
-    let  reuseIdentifier = "customCell"
-    var images2 = ["dtla-pink", "dtop_bground", "dtop", "faroe_islands", "iceland", "maldives_beach", "malign_lake", "mtBaker_BC", "mthood", "mtJefferson_OR", "myanmar", "sf_rock", "switz_oss", "yosemite_falls", "yosemite_valley", "dtla-pink", "dtop_bground", "dtop", "faroe_islands", "iceland", "maldives_beach", "malign_lake", "mtBaker_BC", "mthood", "mtJefferson_OR", "myanmar", "sf_rock", "switz_oss", "yosemite_falls", "yosemite_valley" ]
     
-    
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,22 +26,26 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewWillAppear(animated)
         
         //TODO: instead of reloading on willAppear, only reload if data has changed.. or hopefully add new data without reloading old data that changed
-        imagesFromDefaults = UserDefaults.standard.stringArray(forKey: "images") ?? [String]()
-        collectionView.reloadData()
+       
+        pathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
+        tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
         
+        collectionView.reloadData()
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagesFromDefaults.count
+        return pathEndings.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CustomCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCell", for: indexPath as IndexPath) as! CustomCollectionViewCell
         
-        let filePath = imagesFromDefaults[indexPath.row]
-        if FileManager.default.fileExists(atPath: filePath) {
-            let contentsOfFilePath = UIImage(contentsOfFile: filePath)
+        let pathEnd = "\(pathEndings[indexPath.row]).png"
+        let filePath = pathBeginning.appendingPathComponent(pathEnd)
+        
+        if FileManager.default.fileExists(atPath: filePath.path) {
+            let contentsOfFilePath = UIImage(contentsOfFile: filePath.path)
             let rotatedImage = UIImage(cgImage: (contentsOfFilePath?.cgImage)!, scale: 1.0, orientation: .right) //PNGs not auto-rotated
             cell.cellImageView.image = rotatedImage
         }

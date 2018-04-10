@@ -66,7 +66,7 @@
 		B59D0F0B206D9A3300732284 /* PalettesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalettesViewController.swift; sourceTree = "<group>"; };
 		B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCreatorViewController.swift; sourceTree = "<group>"; };
 		B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteDetailViewController.swift; sourceTree = "<group>"; };
-		B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIColorExtension.swift; path = DesignJournal/UIColorExtension.swift; sourceTree = "<group>"; };
+		B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +97,6 @@
 		B50FBE3720534E8F00DB8032 = {
 			isa = PBXGroup;
 			children = (
-				B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */,
 				B50FBE4220534E9000DB8032 /* DesignJournal */,
 				B50FBE5A20534E9100DB8032 /* DesignJournalTests */,
 				B50FBE6520534E9100DB8032 /* DesignJournalUITests */,
@@ -128,6 +127,7 @@
 				B59D0F0B206D9A3300732284 /* PalettesViewController.swift */,
 				B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */,
 				B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */,
+				B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */,
 				B50FBE4720534E9000DB8032 /* Main.storyboard */,
 				B50FBE4D20534E9000DB8032 /* Assets.xcassets */,
 				B50FBE4F20534E9000DB8032 /* LaunchScreen.storyboard */,
