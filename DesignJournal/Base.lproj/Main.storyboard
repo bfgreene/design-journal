@@ -26,12 +26,15 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFH-kV-AhM">
                                 <rect key="frame" x="0.0" y="20" width="375" height="57"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocs-Lc-wnD">
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocs-Lc-wnD">
                                         <rect key="frame" x="8" y="13" width="91" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Filter: All">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="selectFilter:" destination="oXb-TV-RV0" eventType="touchUpInside" id="qLa-4u-SGd"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </view>
@@ -94,6 +97,8 @@
                     </tabBarItem>
                     <connections>
                         <outlet property="collectionView" destination="k6B-cu-i9U" id="4JS-e8-1vm"/>
+                        <outlet property="filterButton" destination="Ocs-Lc-wnD" id="pKA-fI-9rb"/>
+                        <outlet property="topMenuView" destination="GFH-kV-AhM" id="Ufo-cZ-2Ls"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rsa-zB-bHI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -202,8 +207,8 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="o5D-Ql-4qr"/>
-                                    <barButtonItem systemItem="add" id="Ndz-SF-7Zk">
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <barButtonItem enabled="NO" systemItem="add" id="Ndz-SF-7Zk">
+                                        <color key="tintColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </barButtonItem>
                                 </items>
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -231,32 +236,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IpE-Hb-2Y2">
-                                <rect key="frame" x="0.0" y="20" width="375" height="609"/>
+                                <rect key="frame" x="0.0" y="65" width="375" height="558"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uil-WB-qzj">
-                                <rect key="frame" x="325" y="633" width="34" height="30"/>
+                                <rect key="frame" x="321" y="629" width="38" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="savePhoto:" destination="Ryw-Bf-cBY" eventType="touchUpInside" id="909-pe-pm0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9J-oV-De4">
-                                <rect key="frame" x="10" y="633" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <action selector="goBack:" destination="Ryw-Bf-cBY" eventType="touchUpInside" id="ZrE-pQ-xxc"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rea-0U-RDo">
-                                <rect key="frame" x="143" y="633" width="89" height="30"/>
+                                <rect key="frame" x="261" y="28" width="103" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <state key="normal" title="Make Palette"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Create Palette"/>
                                 <connections>
                                     <action selector="makePalette:" destination="Ryw-Bf-cBY" eventType="touchUpInside" id="3JY-QK-otQ"/>
                                     <segue destination="YWx-Pp-q2O" kind="show" identifier="segueToPaletteCreator" id="60c-yC-4Za"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9J-oV-De4">
+                                <rect key="frame" x="16" y="28" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="goBack:" destination="Ryw-Bf-cBY" eventType="touchUpInside" id="ZrE-pQ-xxc"/>
                                 </connections>
                             </button>
                         </subviews>

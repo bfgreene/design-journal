@@ -32,7 +32,7 @@ class PhotoViewController: UIViewController {
         let typefaceAction = UIAlertAction(title: "Typeface", style: .default){ _ in self.writeImageData(withTag: "typeface") }
         let textureAction = UIAlertAction(title: "Texture", style: .default){ _ in self.writeImageData(withTag: "texture")}
         let layoutAction = UIAlertAction(title: "Layout", style: .default){ _ in self.writeImageData(withTag: "layout")}
-        let interfaceAction = UIAlertAction(title: "Interface", style: .default){ _ in self.writeImageData(withTag: "interface")}
+        let miscAction = UIAlertAction(title: "Misc.", style: .default){ _ in self.writeImageData(withTag: "misc")}
         let noneAction = UIAlertAction(title: "None", style: .default){ _ in self.writeImageData(withTag: "none")}
         
         alertController.addAction(cancelAction)
@@ -40,7 +40,7 @@ class PhotoViewController: UIViewController {
         alertController.addAction(typefaceAction)
         alertController.addAction(textureAction)
         alertController.addAction(layoutAction)
-        alertController.addAction(interfaceAction)
+        alertController.addAction(miscAction)
         alertController.addAction(noneAction)
         
         self.present(alertController, animated: true, completion: nil)
