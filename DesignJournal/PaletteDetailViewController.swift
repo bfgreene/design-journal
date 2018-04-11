@@ -16,6 +16,7 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
     var palette = [UIColor]()
     var hexStrings = [String]()
     var rgbValues = [[Int]]()
+    var paletteIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +59,33 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     
-
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        let alertController = UIAlertController(title: nil, message: "Delete this item?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive){_ in
+            self.deleteImage()
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func deleteImage() {
+        var palettes = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]
+        if let size = palettes?.count, size > paletteIndex {
+            palettes!.remove(at: paletteIndex)
+            UserDefaults.standard.set(palettes!, forKey: "palettes")
+        } else {
+            //Error: could not delete palette
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
+
 
 class swatchDetailCell: UITableViewCell {
     
@@ -67,5 +93,4 @@ class swatchDetailCell: UITableViewCell {
     @IBOutlet var hexLabel: UILabel!
     @IBOutlet var rgbLabels: [UILabel]!
     
-    @IBOutlet var cmykLabels: [UILabel]!
 }

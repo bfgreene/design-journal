@@ -121,6 +121,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
         let indexPath = self.palettesTableView.indexPathForSelectedRow {
             let paletteDetailVC = segue.destination as! PaletteDetailViewController
             paletteDetailVC.palette = palettesFromDefaults[indexPath.row]
+            paletteDetailVC.paletteIndex = indexPath.row
         }
     }
 

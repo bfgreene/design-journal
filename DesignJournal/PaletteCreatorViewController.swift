@@ -170,6 +170,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         storedPalettes.append(colorsData)
         defaults.set(storedPalettes, forKey: "palettes")
         
+        //TODO: dont do this --> go to palettesVC
         self.dismiss(animated: true, completion: nil)
     }
     

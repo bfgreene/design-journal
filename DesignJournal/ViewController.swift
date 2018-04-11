@@ -23,14 +23,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        styleFilterButton(withText: "All")
+        filterImages(withTag: "none", withText: "All")
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         //TODO: instead of reloading on willAppear, only reload if data has changed.. or hopefully add new data without reloading old data that changed
-       
+        //TODO: maintain or reset filter on appear.. not consistent
         pathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
         tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
         filteredIndexes = Array(0..<tags.count)
@@ -125,8 +125,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func styleFilterButton(withText text: String) {
         filterButton.backgroundColor = .clear
-        filterButton.layer.cornerRadius = 15
-        filterButton.layer.borderWidth = 1
+        //filterButton.layer.cornerRadius = 15
+        filterButton.layer.borderWidth = 1.5
         filterButton.layer.borderColor = UIColor.darkGray.cgColor
         filterButton.titleLabel?.textColor = .darkGray
         
@@ -139,12 +139,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier ==  "segueToImageDetail" {
-            if let selectedCell = collectionView.indexPathsForSelectedItems?.first{
+            if let selectedCell = collectionView.indexPathsForSelectedItems?.first {
                 let nextScene = segue.destination as! ImageDetailViewController
                 let cell = collectionView.cellForItem(at: selectedCell) as! CustomCollectionViewCell
                 if let image = cell.cellImageView.image {
                     nextScene.imageFromCollection = image
                 }
+                let index = collectionView.indexPath(for: cell)?.row
+                nextScene.imageIndex = index!
             }
         }
     }
