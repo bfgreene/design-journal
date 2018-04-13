@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		B50E612820547A86009C41BB /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E612720547A86009C41BB /* CustomCollectionViewCell.swift */; };
 		B50FBE4420534E9000DB8032 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FBE4320534E9000DB8032 /* AppDelegate.swift */; };
-		B50FBE4620534E9000DB8032 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FBE4520534E9000DB8032 /* ViewController.swift */; };
+		B50FBE4620534E9000DB8032 /* JournalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50FBE4520534E9000DB8032 /* JournalViewController.swift */; };
 		B50FBE4920534E9000DB8032 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B50FBE4720534E9000DB8032 /* Main.storyboard */; };
 		B50FBE4C20534E9000DB8032 /* DesignJournal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B50FBE4A20534E9000DB8032 /* DesignJournal.xcdatamodeld */; };
 		B50FBE4E20534E9000DB8032 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B50FBE4D20534E9000DB8032 /* Assets.xcassets */; };
@@ -47,7 +47,7 @@
 		B50E612720547A86009C41BB /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		B50FBE4020534E9000DB8032 /* DesignJournal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesignJournal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B50FBE4320534E9000DB8032 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B50FBE4520534E9000DB8032 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B50FBE4520534E9000DB8032 /* JournalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalViewController.swift; sourceTree = "<group>"; };
 		B50FBE4820534E9000DB8032 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B50FBE4B20534E9000DB8032 /* DesignJournal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DesignJournal.xcdatamodel; sourceTree = "<group>"; };
 		B50FBE4D20534E9000DB8032 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 			children = (
 				B50FBE4320534E9000DB8032 /* AppDelegate.swift */,
 				B5743FD12056EF9500E403D3 /* TabBarController.swift */,
-				B50FBE4520534E9000DB8032 /* ViewController.swift */,
+				B50FBE4520534E9000DB8032 /* JournalViewController.swift */,
 				B50E612720547A86009C41BB /* CustomCollectionViewCell.swift */,
 				B5743FD3205748FE00E403D3 /* CameraViewController.swift */,
 				B57B47C12059EBD300B77CAD /* PhotoViewController.swift */,
@@ -292,7 +292,7 @@
 			files = (
 				B5D19D1E20630B5F0013E9BE /* PaletteCreatorViewController.swift in Sources */,
 				B50FBE4C20534E9000DB8032 /* DesignJournal.xcdatamodeld in Sources */,
-				B50FBE4620534E9000DB8032 /* ViewController.swift in Sources */,
+				B50FBE4620534E9000DB8032 /* JournalViewController.swift in Sources */,
 				B5D19D202063F5650013E9BE /* PaletteDetailViewController.swift in Sources */,
 				B57B47C02058959B00B77CAD /* ImageDetailViewController.swift in Sources */,
 				B50FBE4420534E9000DB8032 /* AppDelegate.swift in Sources */,

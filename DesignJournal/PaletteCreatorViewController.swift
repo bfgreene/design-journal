@@ -34,6 +34,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         if let photo = imageFromPhoto.image {
             imageView.image = photo
         } else {
+            //TODO: replace with general "No Image"
             imageView.image = UIImage(named: "dtla-pink") //backup image
         }
         
@@ -170,8 +171,8 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         storedPalettes.append(colorsData)
         defaults.set(storedPalettes, forKey: "palettes")
         
-        //TODO: dont do this --> go to palettesVC
-        self.dismiss(animated: true, completion: nil)
+        //TODO: maybe figure out how to clear navigation  stack(do in root vc?)
+        self.performSegue(withIdentifier: "segueToTabBar", sender: self)
     }
     
     

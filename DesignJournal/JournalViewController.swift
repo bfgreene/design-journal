@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class JournalViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     
     let pathBeginning = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

@@ -14,7 +14,7 @@
         <!--Journal-->
         <scene sceneID="U02-Ga-h1P">
             <objects>
-                <viewController title="Journal" id="oXb-TV-RV0" customClass="ViewController" customModule="DesignJournal" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Journal" id="oXb-TV-RV0" customClass="JournalViewController" customModule="DesignJournal" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ELW-L4-jKr"/>
                         <viewControllerLayoutGuide type="bottom" id="Zu9-tJ-9JJ"/>
@@ -26,9 +26,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFH-kV-AhM">
                                 <rect key="frame" x="0.0" y="20" width="375" height="57"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocs-Lc-wnD">
-                                        <rect key="frame" x="8" y="5" width="91" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ocs-Lc-wnD">
+                                        <rect key="frame" x="307" y="8" width="60" height="30"/>
                                         <state key="normal" title="Filter: All">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -37,6 +36,10 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Ocs-Lc-wnD" secondAttribute="trailing" constant="8" id="uQm-JW-lDK"/>
+                                    <constraint firstItem="Ocs-Lc-wnD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GFH-kV-AhM" secondAttribute="leading" constant="20" symbolic="YES" id="vMX-iy-Ifo"/>
+                                </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k6B-cu-i9U">
                                 <rect key="frame" x="0.0" y="61" width="375" height="557"/>
@@ -88,6 +91,7 @@
                             <constraint firstItem="k6B-cu-i9U" firstAttribute="top" secondItem="ELW-L4-jKr" secondAttribute="bottom" constant="41" id="g1O-kp-nao"/>
                             <constraint firstAttribute="trailing" secondItem="GFH-kV-AhM" secondAttribute="trailing" id="kGv-kc-bu5"/>
                             <constraint firstItem="k6B-cu-i9U" firstAttribute="bottom" secondItem="Zu9-tJ-9JJ" secondAttribute="top" id="oME-Hl-TPc"/>
+                            <constraint firstItem="Ocs-Lc-wnD" firstAttribute="top" secondItem="ELW-L4-jKr" secondAttribute="bottom" constant="8" id="sSL-i1-9Tv"/>
                             <constraint firstItem="GFH-kV-AhM" firstAttribute="top" secondItem="ELW-L4-jKr" secondAttribute="bottom" id="yYa-4g-dKT"/>
                             <constraint firstItem="k6B-cu-i9U" firstAttribute="leading" secondItem="M3x-gB-97W" secondAttribute="leading" id="yuC-u1-hqy"/>
                         </constraints>
@@ -318,15 +322,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRI-tw-8yZ">
-                                <rect key="frame" x="337" y="40" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <segue destination="YWx-Pp-q2O" kind="show" id="BVr-Mq-JLN"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="nln-rj-KO4">
-                                <rect key="frame" x="0.0" y="70" width="375" height="548"/>
+                                <rect key="frame" x="0.0" y="61" width="375" height="557"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -420,6 +417,7 @@
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="savePalette:" destination="YWx-Pp-q2O" eventType="touchUpInside" id="7x9-2K-pcA"/>
+                                    <segue destination="7J6-3A-exP" kind="show" identifier="segueToTabBar" id="7fn-Md-nkT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Xh-5Y-yCt">
@@ -634,7 +632,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Qk0-0R-yC0">
             <objects>
-                <tabBarController id="7J6-3A-exP" customClass="TabBarController" customModule="DesignJournal" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabBarController" id="7J6-3A-exP" customClass="TabBarController" customModule="DesignJournal" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Hr6-rY-MWT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -656,7 +654,8 @@
         <image name="icons8-waste-50" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="7fn-Md-nkT"/>
         <segue reference="mHv-Ou-sdu"/>
-        <segue reference="YZU-1m-dD0"/>
+        <segue reference="UkO-8X-y5P"/>
     </inferredMetricsTieBreakers>
 </document>
