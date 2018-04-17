@@ -17,25 +17,32 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
     var filteredIndexes = [Int]()
     
     @IBOutlet var collectionView: UICollectionView!
-    
     @IBOutlet var filterButton: UIButton!
     @IBOutlet var topMenuView: UIView!
+    
+    var shouldUpdateData = false
+    var currentFilter = "none"
+    var currentFilterText = "All"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         filterImages(withTag: "none", withText: "All")
+        
+        pathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
+        tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
+        filteredIndexes = Array(0..<tags.count)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        //TODO: instead of reloading on willAppear, only reload if data has changed.. or hopefully add new data without reloading old data that changed
-        //TODO: maintain or reset filter on appear.. not consistent
-        pathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
-        tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
-        filteredIndexes = Array(0..<tags.count)
-        
-        collectionView.reloadData()
+  
+        let newPathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
+        if newPathEndings.count != pathEndings.count {
+            pathEndings = newPathEndings
+            tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
+            filteredIndexes = Array(0..<tags.count)
+            filterImages(withTag: currentFilter, withText: currentFilterText)
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -53,8 +60,9 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
         
         if FileManager.default.fileExists(atPath: filePath.path) {
             let contentsOfFilePath = UIImage(contentsOfFile: filePath.path)
-            let rotatedImage = UIImage(cgImage: (contentsOfFilePath?.cgImage)!, scale: 1.0, orientation: .right) //PNGs not auto-rotated
-            cell.cellImageView.image = rotatedImage
+            //let rotatedImage = UIImage(cgImage: (contentsOfFilePath?.cgImage)!, scale: 1.0, orientation: .right) //PNGs not auto-rotated
+            //cell.cellImageView.image = rotatedImage
+            cell.cellImageView.image = contentsOfFilePath
         }
         
         return cell
@@ -108,6 +116,9 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
     func filterImages(withTag tag: String, withText text:String) {
         styleFilterButton(withText: text)
         
+        currentFilter = tag
+        currentFilterText = text
+        
         if tag == "none" {
             filteredIndexes = Array(0..<tags.count)
         } else {
@@ -125,7 +136,6 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
     
     func styleFilterButton(withText text: String) {
         filterButton.backgroundColor = .clear
-        //filterButton.layer.cornerRadius = 15
         filterButton.layer.borderWidth = 1.5
         filterButton.layer.borderColor = UIColor.darkGray.cgColor
         filterButton.titleLabel?.textColor = .darkGray
@@ -134,6 +144,14 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
         filterButton.contentEdgeInsets = UIEdgeInsetsMake(5.0, 10.0, 5.0, 10.0)
         filterButton.sizeToFit()
         
+    }
+    
+    @IBAction func unwindtoJournalVC(segue: UIStoryboardSegue) {
+        if shouldUpdateData {
+            tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
+            filterImages(withTag: currentFilter, withText: currentFilterText)
+        }
+        shouldUpdateData = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -15,8 +15,6 @@ class PhotoViewController: UIViewController {
     
     var saveOnly = true
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,8 +25,6 @@ class PhotoViewController: UIViewController {
     
     
     @IBAction func savePhoto(_ sender: Any) {
-        
-        
         let alertController = UIAlertController(title: nil, message: "Select a Tag:", preferredStyle: .actionSheet)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
@@ -57,6 +53,8 @@ class PhotoViewController: UIViewController {
         let pathEnding: Int = Int(Date().timeIntervalSince1970)
         let filePath = documentsURL.appendingPathComponent("\(pathEnding).png")
         
+        if newPhoto != nil { newPhoto = newPhoto!.fixOrientation() }
+        
         //create image data and write to filePath
         do {
             if let pngImageData = UIImagePNGRepresentation(newPhoto!) {
@@ -65,7 +63,6 @@ class PhotoViewController: UIViewController {
         } catch {
             print("Error: could not write image")
         }
-        
         
         let defaults = UserDefaults.standard
         
@@ -78,31 +75,10 @@ class PhotoViewController: UIViewController {
         defaults.set(tags, forKey: "tags")
     
         if saveOnly {
-            //self.dismiss .dismiss
-            self.performSegue(withIdentifier: "segueToJournal", sender: self)
+            goBackToTabBar(self)
         } else {
             saveOnly = true
             self.performSegue(withIdentifier: "segueToPaletteCreator", sender: self)
-        }
-        
-        
-    }
-    
-    
-    //clear all files from directory.. move somewhere or use delete part
-    func clearImageCache() {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let documentPath = documentsURL.path
-        
-        do {
-            let files = try fileManager.contentsOfDirectory(atPath: "\(documentPath)")
-            print("files in /Documents/: \(files.count)")
-            for file in files {
-                try fileManager.removeItem(atPath: "\(documentPath)/\(file)")
-            }
-        } catch {
-            print("Error: could not clear cache")
         }
     }
     
@@ -117,7 +93,6 @@ class PhotoViewController: UIViewController {
         }
         let onlyPaletteAction = UIAlertAction(title: "Create Palette", style: .default) {_ in
            self.performSegue(withIdentifier: "segueToPaletteCreator", sender: self)
-
         }
         
         alertController.addAction(cancelAction)
@@ -127,21 +102,19 @@ class PhotoViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    
     @IBAction func goBack(_ sender: Any) {
-        //clearImageCache() //if uncommenting, also clear userdefaults "images" array
         self.dismiss(animated: true, completion: nil)
     }
     
-
+    func goBackToTabBar(_ sender: Any) {
+        performSegue(withIdentifier: "unwindToTabBar", sender: self)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToPaletteCreator",
             let nextScene = segue.destination as? PaletteCreatorViewController {
             nextScene.imageFromPhoto.image = self.imageView.image
         }
     }
-    
-    
-    
 
 }

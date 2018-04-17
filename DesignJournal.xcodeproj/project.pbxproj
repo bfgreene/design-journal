@@ -24,6 +24,7 @@
 		B5D19D1E20630B5F0013E9BE /* PaletteCreatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */; };
 		B5D19D202063F5650013E9BE /* PaletteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */; };
 		B5EAA505207ACCAB00BED796 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */; };
+		B5F4741A2081675D00525A92 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F474192081675D00525A92 /* UIImageExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCreatorViewController.swift; sourceTree = "<group>"; };
 		B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteDetailViewController.swift; sourceTree = "<group>"; };
 		B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		B5F474192081675D00525A92 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */,
 				B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */,
 				B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */,
+				B5F474192081675D00525A92 /* UIImageExtension.swift */,
 				B50FBE4720534E9000DB8032 /* Main.storyboard */,
 				B50FBE4D20534E9000DB8032 /* Assets.xcassets */,
 				B50FBE4F20534E9000DB8032 /* LaunchScreen.storyboard */,
@@ -299,6 +302,7 @@
 				B5743FD22056EF9600E403D3 /* TabBarController.swift in Sources */,
 				B59D0F0C206D9A3300732284 /* PalettesViewController.swift in Sources */,
 				B57B47C22059EBD300B77CAD /* PhotoViewController.swift in Sources */,
+				B5F4741A2081675D00525A92 /* UIImageExtension.swift in Sources */,
 				B50E612820547A86009C41BB /* CustomCollectionViewCell.swift in Sources */,
 				B5743FD4205748FE00E403D3 /* CameraViewController.swift in Sources */,
 				B5EAA505207ACCAB00BED796 /* UIColorExtension.swift in Sources */,

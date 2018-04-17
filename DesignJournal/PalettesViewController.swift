@@ -14,29 +14,28 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
     var palettesFromDefaults = [[UIColor]]()
     var numPalettes = 0
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
        // let defaults = UserDefaults.standard
        // defaults.set([], forKey: "palettes")
         
         palettesFromDefaults = updatePalettesData()
         numPalettes = palettesFromDefaults.count
-        
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let updatedPalettes = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]
-        if (updatedPalettes?.count)! != numPalettes {
+        let updatedPalettes = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]] ?? [[NSData]]()
+        if updatedPalettes.count != numPalettes {
             palettesFromDefaults = updatePalettesData()
             palettesTableView.reloadData()
             numPalettes = palettesFromDefaults.count
         }
         
+        //crashing because called before reloadData() finishes
+        // palettesTableView.scrollToRow(at: IndexPath(row: (palettesFromDefaults.count - 1), section: 0), at: .bottom, animated: true)
+    
     }
 
     
@@ -102,7 +101,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
 
     
     func updatePalettesData() -> [[UIColor]] {
-        let palettesAsData = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]!
+        let palettesAsData = UserDefaults.standard.array(forKey: "palettes") as? [[NSData]]! ?? [[NSData]]()
         var palettesAsColors = [[UIColor]]()
         if palettesAsData != nil {
             for index in palettesAsData!.indices {
@@ -116,6 +115,10 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
+    @IBAction func dismissInfoScreen(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToPaletteDetail",
         let indexPath = self.palettesTableView.indexPathForSelectedRow {
@@ -126,7 +129,6 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
 }
-
 
 class paletteCell: UITableViewCell {
     var colors: [UIColor]!

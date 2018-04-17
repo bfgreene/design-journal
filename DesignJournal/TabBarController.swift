@@ -47,7 +47,7 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
     
     @IBAction func addButtonPressed(sender: UIButton) {
         //call UIAlert pop up menu from bottom -> Camera Roll or Camera
-        let alertController = UIAlertController(title: nil, message: "Towels.", preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: nil, message: "New Image:", preferredStyle: .actionSheet)
         
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
@@ -69,7 +69,13 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         self.present(alertController, animated: true) {}
     }
    
-
+    // Select image from photo library and go to PhotoVC
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        dismiss(animated: true, completion: nil)
+        goToPhotoVC(withImage: image)
+    }
+    
     func goToPhotoVC(withImage image: UIImage) {
         let photoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoViewController
         photoVC.newPhoto = image
@@ -78,11 +84,9 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         }
     }
     
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        dismiss(animated: true, completion: nil)
-        goToPhotoVC(withImage: image)
+    @IBAction func unwindToTabBar(segue: UIStoryboardSegue) {
+        //if came from paletteCreator.. go to palettesVC
     }
+    
 
 }

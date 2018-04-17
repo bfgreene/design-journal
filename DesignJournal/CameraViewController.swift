@@ -19,12 +19,6 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var captureDevice: AVCaptureDevice!
     var takePhoto = false
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         prepareCamera()
@@ -97,7 +91,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             let imageRect = CGRect(x:0, y:0, width: CVPixelBufferGetWidth(pixelBuffer), height: CVPixelBufferGetHeight(pixelBuffer))
             
             if let image = context.createCGImage(ciImage, from: imageRect) {
-                return UIImage(cgImage: image, scale: UIScreen.main.scale, orientation: .right)
+                return UIImage(cgImage: image, scale: UIScreen.main.scale, orientation: .right) 
             }
         }
         
@@ -114,26 +108,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }
     }
     
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     @IBAction func goBack(_ sender: AnyObject) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -10,8 +10,6 @@ import UIKit
 
 class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
-    
     @IBOutlet var swatchesTableView: UITableView!
     var palette = [UIColor]()
     var hexStrings = [String]()
@@ -25,9 +23,7 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
         rgbValues = palette.map({ (color:UIColor) -> [Int] in
             return color.getRGB()
         })
-        
     }
-    
     
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -58,7 +54,6 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
         return 100.0
     }
     
-    
     @IBAction func deleteButtonPressed(_ sender: Any) {
         let alertController = UIAlertController(title: nil, message: "Delete this item?", preferredStyle: .alert)
         
@@ -79,7 +74,7 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
             palettes!.remove(at: paletteIndex)
             UserDefaults.standard.set(palettes!, forKey: "palettes")
         } else {
-            //Error: could not delete palette
+            print("Error: could not delete palette")
         }
         self.dismiss(animated: true, completion: nil)
     }

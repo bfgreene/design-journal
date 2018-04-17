@@ -14,19 +14,18 @@ class swatchCell: UITableViewCell  {
     var color: UIColor!
 }
 
-class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDataSource {
+class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var table: UITableView!
     
     var imageFromPhoto = UIImageView()
-    
-    var palettePreview: UIView!
-    var change = false
+   // var change = false
     
     var colors: [UIColor] = []
     @IBOutlet var addRowButton: UIButton!
-    
+    @IBOutlet var saveButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,20 +37,19 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
             imageView.image = UIImage(named: "dtla-pink") //backup image
         }
         
+        scrollView.minimumZoomScale = 1.0
+        scrollView.maximumZoomScale = 6.0
+        
         imageView.backgroundColor = UIColor.black
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(withSender: )))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
         
-        let screenSize = UIScreen.main.bounds
-        palettePreview = UIView(frame: CGRect(x: 0, y: 20, width: screenSize.width, height: 30 ))
-        setPalettePreview(colors: [UIColor.white,UIColor.lightGray, UIColor.darkGray, UIColor.black])
-        view.addSubview(palettePreview)
-        
         table.separatorStyle = UITableViewCellSeparatorStyle.none
         addRowButton.backgroundColor = UIColor.white
         
+        saveButton.isEnabled = false
     }
     
     func handleTap(withSender gestureRecognizer: UITapGestureRecognizer) {
@@ -71,34 +69,14 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         table.insertRows(at: [indexPath], with: .automatic)
         table.endUpdates()
         table.scrollToRow(at: indexPath, at: .bottom, animated: true)
-    }
-    
-    
-    
-    
-    // TODO: make sure to remove sublayers before calling again(if user adds/changes selections)
-    func setPalettePreview(colors: [UIColor]) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = palettePreview.bounds
         
-        var colorArray: [CGColor] = []
-        var locationArray: [NSNumber] = []
-        for(index, color) in colors.enumerated() {
-            colorArray.append(color.cgColor)
-            colorArray.append(color.cgColor)
-            locationArray.append(NSNumber(value: (1.0 / Double(colors.count)) * Double(index)))
-            locationArray.append(NSNumber(value: (1.0 / Double(colors.count)) * Double(index + 1)))
+        
+        if colors.count > 0 { saveButton.isEnabled = true }
+        if colors.count > 5 {
+            addRowButton.isEnabled = false
+            addRowButton.backgroundColor = .lightGray
+            addRowButton.setTitleColor(.gray, for: .normal)
         }
-        
-        gradientLayer.colors = colorArray
-        gradientLayer.locations = locationArray
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        
-        
-        palettePreview.backgroundColor = UIColor.clear
-        palettePreview.layer.addSublayer(gradientLayer)
-        palettePreview.layer.masksToBounds = true
     }
     
     
@@ -121,7 +99,6 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         }
         return color!
     }
-    
     
     
     //   MARK: TableViewDataSource Methods
@@ -153,32 +130,38 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
             colors.remove(at: indexPath.row)
             table.deleteRows(at: [indexPath], with: .left)
             table.endUpdates()
+
+            if colors.count < 1 { saveButton.isEnabled = false }
+            if colors.count < 6 {
+                addRowButton.isEnabled = true
+                addRowButton.setTitleColor(.black, for: .normal)
+            }
         }
     }
     
-    //TODO: don't allow save if not at least one color in colors
     @IBAction func savePalette(_ sender: Any) {
-        
         let colorsData = colors.map({ (color:UIColor) -> NSData in
             return NSKeyedArchiver.archivedData(withRootObject: color) as NSData
         })
         
-        
         let defaults = UserDefaults.standard
         var storedPalettes = defaults.object(forKey: "palettes") as? [[NSData]] ?? [[NSData]]()
         
-       
         storedPalettes.append(colorsData)
         defaults.set(storedPalettes, forKey: "palettes")
-        
-        //TODO: maybe figure out how to clear navigation  stack(do in root vc?)
-        self.performSegue(withIdentifier: "segueToTabBar", sender: self)
+
+        goBackToTabBar(self)
     }
     
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
+    func goBackToTabBar(_ sender: Any) {
+        performSegue(withIdentifier: "unwindSegueToTabBar", sender: self)
+    }
     
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
-
 }

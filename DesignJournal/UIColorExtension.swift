@@ -29,26 +29,14 @@ extension UIColor {
         })
         let colorsHex = colorsRGB.map({ (rgb: [Int]) -> String in
             var hex = String(format: "%2x", rgb[0])
+           // if rgb[0] < 16 { hex += "0" }
             hex += String(format: "%2x", rgb[1])
+           // if rgb[1] < 16 { hex += "0" }
             hex += String(format: "%2x", rgb[2])
-            return hex
+           // if rgb[2] < 16 { hex += "0" }
+            return hex.replacingOccurrences(of: " ", with: "0")
         })
         return colorsHex
     }
-    
-    /*
-     func convert(rgb r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> (c: CGFloat, m: CGFloat, y: CGFloat, k: CGFloat) {
-     let r = r / 255
-     let g = g / 255
-     let b = b / 255
-     
-     let k = 1 - max(r, g, b)
-     let c = (k == 1) ? 0 : (1 - r - k) / (1 - k)
-     let m = (k == 1) ? 0 : (1 - g - k) / (1 - k)
-     let y = (k == 1) ? 0 : (1 - b - k) / (1 - k)
-     
-     return (c, m, y, k)
-     }
-    */
     
 }
