@@ -55,7 +55,7 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     @IBAction func deleteButtonPressed(_ sender: Any) {
-        let alertController = UIAlertController(title: nil, message: "Delete this item?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: nil, message: "Delete this palette?", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive){_ in

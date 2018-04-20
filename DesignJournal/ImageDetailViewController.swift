@@ -32,7 +32,7 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
     
     
     @IBAction func trashButtonPushed(_ sender: Any) {
-        let alertController = UIAlertController(title: nil, message: "Delete this item?", preferredStyle: .alert)
+        let alertController = UIAlertController(title: nil, message: "Delete this image?", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive){_ in
@@ -104,6 +104,17 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
             print("Error: could not change tag")
         }
         
+    }
+    
+    
+    @IBAction func downloadImagePressed(_ sender: Any) {
+        if imageView.image != nil {
+            UIImageWriteToSavedPhotosAlbum(imageView.image!, nil, nil, nil)
+            //successfulsave image alert view
+            let alert = UIAlertController(title: nil, message: "Image saved to Camera Roll.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default))
+            self.present(alert, animated: true)
+        }
     }
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {

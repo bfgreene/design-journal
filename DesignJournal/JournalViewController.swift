@@ -21,12 +21,16 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBOutlet var topMenuView: UIView!
     
     var shouldUpdateData = false
-    var currentFilter = "none"
-    var currentFilterText = "All"
+    var newImageTag: String?
+    var currentFilter: String?
+    var currentFilterText: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterImages(withTag: "none", withText: "All")
+        
+        if currentFilter == nil {
+            filterImages(withTag: "none", withText: "All")
+        }
         
         pathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
         tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
@@ -35,13 +39,16 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-  
-        let newPathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
-        if newPathEndings.count != pathEndings.count {
-            pathEndings = newPathEndings
-            tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
-            filteredIndexes = Array(0..<tags.count)
-            filterImages(withTag: currentFilter, withText: currentFilterText)
+        
+        pathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
+        tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
+        
+        if newImageTag != nil {
+            if newImageTag == currentFilter || currentFilter == "none" {
+                filteredIndexes.append(tags.count-1)
+                newImageTag = nil
+                collectionView.reloadData()
+            }
         }
     }
 
@@ -55,13 +62,12 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
         
         let nextIndex = filteredIndexes[indexPath.row]
         
+        //crashed.. somehow called before pathEndings loaded ... probably becauase I move it to viewDidAppear
         let pathEnd = "\(pathEndings[nextIndex]).png"
         let filePath = pathBeginning.appendingPathComponent(pathEnd)
         
         if FileManager.default.fileExists(atPath: filePath.path) {
             let contentsOfFilePath = UIImage(contentsOfFile: filePath.path)
-            //let rotatedImage = UIImage(cgImage: (contentsOfFilePath?.cgImage)!, scale: 1.0, orientation: .right) //PNGs not auto-rotated
-            //cell.cellImageView.image = rotatedImage
             cell.cellImageView.image = contentsOfFilePath
         }
         
@@ -130,7 +136,7 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
         
         collectionView.reloadData()
         if filteredIndexes.count > 0 {
-            collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: UICollectionViewScrollPosition.top, animated: true)
+            collectionView.scrollToItem(at: IndexPath(item: filteredIndexes.count-1, section: 0), at: .bottom, animated: true)
         }
     }
     
@@ -149,7 +155,7 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
     @IBAction func unwindtoJournalVC(segue: UIStoryboardSegue) {
         if shouldUpdateData {
             tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
-            filterImages(withTag: currentFilter, withText: currentFilterText)
+            filterImages(withTag: currentFilter!, withText: currentFilterText!)//will always be set by this point
         }
         shouldUpdateData = false
     }

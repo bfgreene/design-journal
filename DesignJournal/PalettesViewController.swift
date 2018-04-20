@@ -30,11 +30,13 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
         if updatedPalettes.count != numPalettes {
             palettesFromDefaults = updatePalettesData()
             palettesTableView.reloadData()
+        
             numPalettes = palettesFromDefaults.count
+            palettesTableView.scrollToRow(at: IndexPath(row: (palettesFromDefaults.count - 1), section: 0), at: .bottom, animated: true)
         }
         
         //crashing because called before reloadData() finishes
-        // palettesTableView.scrollToRow(at: IndexPath(row: (palettesFromDefaults.count - 1), section: 0), at: .bottom, animated: true)
+        //
     
     }
 

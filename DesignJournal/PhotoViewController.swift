@@ -13,6 +13,8 @@ class PhotoViewController: UIViewController {
     var newPhoto: UIImage?
     @IBOutlet var imageView: UIImageView!
     
+    var imageTag = ""
+    
     var saveOnly = true
     
     override func viewDidLoad() {
@@ -75,6 +77,7 @@ class PhotoViewController: UIViewController {
         defaults.set(tags, forKey: "tags")
     
         if saveOnly {
+            imageTag = tag
             goBackToTabBar(self)
         } else {
             saveOnly = true
@@ -107,13 +110,16 @@ class PhotoViewController: UIViewController {
     }
     
     func goBackToTabBar(_ sender: Any) {
-        performSegue(withIdentifier: "unwindToTabBar", sender: self)
+        performSegue(withIdentifier: "unwindToJournal", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToPaletteCreator",
             let nextScene = segue.destination as? PaletteCreatorViewController {
             nextScene.imageFromPhoto.image = self.imageView.image
+        }
+        if segue.identifier == "unwindToJournal", let journalVC = segue.destination as? JournalViewController {
+            journalVC.newImageTag = imageTag
         }
     }
 
