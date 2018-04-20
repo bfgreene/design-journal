@@ -11,9 +11,9 @@ find your personal style.
 
 ## Features
 
-- Journal grid
-  ![journal screenshot](https://github.com/bfgreene/design-journal/blob/master/screenshots/journalScreenshot.PNG)
-- Palette creator
-  ![palette creator screenshot](https://github.com/bfgreene/design-journal/blob/master/screenshots/paletteCreatorScreenshot.PNG)
-- Palettes table
-  ![palettes screenshot](https://github.com/bfgreene/design-journal/blob/master/screenshots/palettesScreenshot.PNG)
+### Journal grid <br />
+  ![journal screenshot](https://github.com/bfgreene/design-journal/blob/master/screenshots/journalScreenshot.PNG) <br />
+### Palette creator <br />
+  ![palette creator screenshot](https://github.com/bfgreene/design-journal/blob/master/screenshots/paletteCreatorScreenshot.png) <br />
+### Palettes table <br />
+  ![palettes screenshot](https://github.com/bfgreene/design-journal/blob/master/screenshots/palettesScreenshot.PNG) <br />
