@@ -14,7 +14,10 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var imageView: UIImageView!
     var imageFromCollection = UIImage()
     var imageIndex = 0
+    var updatedTag = "none"
+    var originalTag = ""
     var tagChanged = false
+    var wasDeleted = false
     
     @IBOutlet var scrollView: UIScrollView!
     
@@ -66,7 +69,8 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
         
         UserDefaults.standard.set(pathEndings, forKey: "pathEndings")
         UserDefaults.standard.set(tags, forKey: "tags")
-    
+        tagChanged = true
+        wasDeleted = true
         goBackToJournal(self)
     }
     
@@ -77,7 +81,7 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
         let logoAction = UIAlertAction(title: "Logo", style: .default) {_ in self.retagImage(withTag: "logo")}
         let typefaceAction = UIAlertAction(title: "Typeface", style: .default) {_ in self.retagImage(withTag: "typeface") }
-        let textureAction = UIAlertAction(title: "Texture", style: .default) {_ in self.retagImage(withTag: "texture")}
+        let patternAction = UIAlertAction(title: "Pattern", style: .default) {_ in self.retagImage(withTag: "pattern")}
         let layoutAction = UIAlertAction(title: "Layout", style: .default) {_ in self.retagImage(withTag: "layout")}
         let miscAction = UIAlertAction(title: "Misc.", style: .default) {_ in self.retagImage(withTag: "misc")}
         let noneAction = UIAlertAction(title: "None", style: .default) {_ in self.retagImage(withTag: "none")}
@@ -85,7 +89,7 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
         alertController.addAction(cancelAction)
         alertController.addAction(logoAction)
         alertController.addAction(typefaceAction)
-        alertController.addAction(textureAction)
+        alertController.addAction(patternAction)
         alertController.addAction(layoutAction)
         alertController.addAction(miscAction)
         alertController.addAction(noneAction)
@@ -99,6 +103,7 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
         if tags != nil {
             tags![imageIndex] = tag
             defaults.set(tags, forKey: "tags")
+            updatedTag = tag
             tagChanged = true
         } else {
             print("Error: could not change tag")
@@ -131,8 +136,14 @@ class ImageDetailViewController: UIViewController, UIScrollViewDelegate {
             paletteCreatorVC.imageFromPhoto.image = self.imageView.image
         } else if segue.identifier == "unwindSegueToJournal",
             let journalVC = segue.destination as? JournalViewController {
-            if tagChanged { journalVC.shouldUpdateData = true }
+            if tagChanged {
+                //journalVC.shouldUpdateData = true
+                journalVC.updatedTag = updatedTag
+                journalVC.tags[imageIndex] = updatedTag
+            }
             tagChanged = false
+            if wasDeleted { journalVC.deletedImageIndex = imageIndex }
+            wasDeleted = false
         }
     }
 }

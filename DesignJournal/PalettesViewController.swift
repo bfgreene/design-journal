@@ -34,13 +34,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
             numPalettes = palettesFromDefaults.count
             palettesTableView.scrollToRow(at: IndexPath(row: (palettesFromDefaults.count - 1), section: 0), at: .bottom, animated: true)
         }
-        
-        //crashing because called before reloadData() finishes
-        //
-    
     }
-
-    
     
     //   MARK: UITableViewDataSource methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,7 +43,7 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! paletteCell
+        let cell = palettesTableView.dequeueReusableCell(withIdentifier: "paletteCell")! as! PaletteCell
         cell.selectionStyle = .none
 
         let palette = palettesFromDefaults[indexPath.row]
@@ -130,13 +124,4 @@ class PalettesViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
 
-}
-
-class paletteCell: UITableViewCell {
-    var colors: [UIColor]!
-    var colorsHex: [String]!
-    
-    @IBOutlet var swatchCells: [UIView]!
-    
-    
 }

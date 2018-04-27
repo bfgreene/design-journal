@@ -8,12 +8,6 @@
 
 import UIKit
 
-class swatchCell: UITableViewCell  {
-    @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var colorLabel: UILabel!
-    var color: UIColor!
-}
-
 class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     @IBOutlet var imageView: UIImageView!
@@ -21,7 +15,6 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     @IBOutlet var table: UITableView!
     
     var imageFromPhoto = UIImageView()
-   // var change = false
     
     var colors: [UIColor] = []
     @IBOutlet var addRowButton: UIButton!
@@ -33,8 +26,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         if let photo = imageFromPhoto.image {
             imageView.image = photo
         } else {
-            //TODO: replace with general "No Image"
-            imageView.image = UIImage(named: "dtla-pink") //backup image
+            imageView.image = UIImage()
         }
         
         scrollView.minimumZoomScale = 1.0
@@ -48,7 +40,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         
         table.separatorStyle = UITableViewCellSeparatorStyle.none
         addRowButton.backgroundColor = UIColor.white
-        
+
         saveButton.isEnabled = false
     }
     
@@ -108,7 +100,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "swatchCell")! as! swatchCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "swatchCell")! as! SwatchCell
         
         cell.color = colors[indexPath.row]
         cell.colorLabel.backgroundColor = cell.color

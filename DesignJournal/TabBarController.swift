@@ -16,23 +16,8 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UITabBar.appearance().barTintColor = UIColor.white
-        UITabBar.appearance().tintColor = UIColor.black
-        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)], for: [.normal])
-
-        addButton.setTitle("+", for: .normal)
-        addButton.titleLabel?.font = UIFont.systemFont(ofSize: 35, weight: UIFontWeightThin)
-        addButton.setTitleColor(UIColor.black, for: .normal)
-        addButton.setTitleColor(UIColor.gray, for: .highlighted)
-        addButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 5, 0)
-        
-        
-        addButton.frame = CGRect(x: 100, y:0, width: 44, height: 44)
-        addButton.backgroundColor = UIColor.white
-        addButton.layer.borderColor = UIColor.black.cgColor
-        addButton.layer.borderWidth = 1.5
+        customizeTabBar()
         self.view.insertSubview(addButton, aboveSubview: self.tabBar)
-        
         addButton.addTarget(self, action: #selector(self.addButtonPressed(sender:)), for: .touchUpInside)
     }
     
@@ -41,14 +26,11 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         super.viewDidLayoutSubviews()
         addButton.frame = CGRect.init(x: self.tabBar.center.x - 30, y: self.view.bounds.height - 47, width: 50, height: 45)
         addButton.layer.cornerRadius = 8
-     //   addButton.frame = CGRect.init(x: self.tabBar.center.x - 32, y: self.view.bounds.height - 74, width: 64, height: 64)
-       // addButton.layer.cornerRadius = 32
     }
     
     @IBAction func addButtonPressed(sender: UIButton) {
         //call UIAlert pop up menu from bottom -> Camera Roll or Camera
         let alertController = UIAlertController(title: nil, message: "New Image:", preferredStyle: .actionSheet)
-        
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
         let cameraAction = UIAlertAction(title: "Use Camera", style: .default) {_ in
@@ -76,6 +58,25 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         goToPhotoVC(withImage: image)
     }
     
+    func customizeTabBar() {
+        //TabBar and TabBar item appearance
+        UITabBar.appearance().barTintColor = UIColor.white
+        UITabBar.appearance().tintColor = UIColor.black
+        UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName : UIFont.systemFont(ofSize: 16, weight: UIFontWeightRegular)], for: [.normal])
+        
+        //addButton styling
+        addButton.setTitle("+", for: .normal)
+        addButton.titleLabel?.font = UIFont.systemFont(ofSize: 35, weight: UIFontWeightThin)
+        addButton.setTitleColor(UIColor.black, for: .normal)
+        addButton.setTitleColor(UIColor.gray, for: .highlighted)
+        addButton.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 5, 0)
+        
+        addButton.frame = CGRect(x: 100, y:0, width: 44, height: 44)
+        addButton.backgroundColor = UIColor.white
+        addButton.layer.borderColor = UIColor.black.cgColor
+        addButton.layer.borderWidth = 1.5
+    }
+    
     func goToPhotoVC(withImage image: UIImage) {
         let photoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoViewController
         photoVC.newPhoto = image
@@ -84,9 +85,7 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         }
     }
     
-    @IBAction func unwindToTabBar(segue: UIStoryboardSegue) {
-        //if came from paletteCreator.. go to palettesVC
-    }
+    @IBAction func unwindToTabBar(segue: UIStoryboardSegue) {}
     
 
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class CustomCollectionViewCell: UICollectionViewCell {
- 
-    
     @IBOutlet var cellImageView: UIImageView!
 }
+
+

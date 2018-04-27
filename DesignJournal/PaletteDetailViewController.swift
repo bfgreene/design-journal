@@ -35,7 +35,7 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = swatchesTableView.dequeueReusableCell(withIdentifier: "swatchDetailCell") as! swatchDetailCell
+        let cell = swatchesTableView.dequeueReusableCell(withIdentifier: "swatchDetailCell") as! SwatchDetailCell
         
         cell.selectionStyle = .none
         cell.colorLabel.backgroundColor = palette[indexPath.row]
@@ -78,14 +78,5 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
         }
         self.dismiss(animated: true, completion: nil)
     }
-    
-}
-
-
-class swatchDetailCell: UITableViewCell {
-    
-    @IBOutlet var colorLabel: UILabel!
-    @IBOutlet var hexLabel: UILabel!
-    @IBOutlet var rgbLabels: [UILabel]!
     
 }

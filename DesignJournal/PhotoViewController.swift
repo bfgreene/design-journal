@@ -10,11 +10,10 @@ import UIKit
 
 class PhotoViewController: UIViewController {
 
-    var newPhoto: UIImage?
     @IBOutlet var imageView: UIImageView!
     
+    var newPhoto: UIImage?
     var imageTag = ""
-    
     var saveOnly = true
     
     override func viewDidLoad() {
@@ -32,7 +31,7 @@ class PhotoViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {_ in }
         let logoAction = UIAlertAction(title: "Logo", style: .default) {_ in self.writeImageData(withTag: "logo")}
         let typefaceAction = UIAlertAction(title: "Typeface", style: .default) {_ in self.writeImageData(withTag: "typeface") }
-        let textureAction = UIAlertAction(title: "Texture", style: .default) {_ in self.writeImageData(withTag: "texture")}
+        let patternAction = UIAlertAction(title: "Pattern", style: .default) {_ in self.writeImageData(withTag: "pattern")}
         let layoutAction = UIAlertAction(title: "Layout", style: .default) {_ in self.writeImageData(withTag: "layout")}
         let miscAction = UIAlertAction(title: "Misc.", style: .default) {_ in self.writeImageData(withTag: "misc")}
         let noneAction = UIAlertAction(title: "None", style: .default) {_ in self.writeImageData(withTag: "none")}
@@ -40,7 +39,7 @@ class PhotoViewController: UIViewController {
         alertController.addAction(cancelAction)
         alertController.addAction(logoAction)
         alertController.addAction(typefaceAction)
-        alertController.addAction(textureAction)
+        alertController.addAction(patternAction)
         alertController.addAction(layoutAction)
         alertController.addAction(miscAction)
         alertController.addAction(noneAction)

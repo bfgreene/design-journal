@@ -11,9 +11,6 @@ import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-  //  var newPhoto: UIImage?
-  //  @IBOutlet var cameraView: UIImageView!
-    
     let captureSession = AVCaptureSession()
     var previewLayer: CALayer!
     var captureDevice: AVCaptureDevice!
@@ -24,6 +21,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         prepareCamera()
     }
 
+    //check for available devices
     func prepareCamera() {
         captureSession.sessionPreset = AVCaptureSessionPresetPhoto
         if let availableDevices = AVCaptureDeviceDiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaTypeVideo, position: .back).devices {
@@ -32,6 +30,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }
     }
     
+    //begin capture session, display frames on in view
     func beginSession() {
         do {
             let captureDeviceInput = try AVCaptureDeviceInput(device: captureDevice)
@@ -59,7 +58,6 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             
             let queue = DispatchQueue(label: "captureQueue")
             dataOutput.setSampleBufferDelegate(self, queue: queue)
-            
         }
     }
 
@@ -67,10 +65,10 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         takePhoto = true
     }
     
+    //grab image upon button press and stop capture session
     func captureOutput(_ output: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, from connection: AVCaptureConnection!) {
         if takePhoto {
             takePhoto = false
-            //getImageFromSampleBuffer
             if let image = self.getImageFromSampleBuffer(buffer: sampleBuffer) {
                 let photoVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PhotoVC") as! PhotoViewController
                 photoVC.newPhoto = image

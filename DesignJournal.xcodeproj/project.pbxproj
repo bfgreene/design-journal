@@ -20,6 +20,10 @@
 		B5743FD4205748FE00E403D3 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5743FD3205748FE00E403D3 /* CameraViewController.swift */; };
 		B57B47C02058959B00B77CAD /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57B47BF2058959B00B77CAD /* ImageDetailViewController.swift */; };
 		B57B47C22059EBD300B77CAD /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57B47C12059EBD300B77CAD /* PhotoViewController.swift */; };
+		B597541A2090FB2B00A83409 /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59754192090FB2B00A83409 /* PaletteCell.swift */; };
+		B597541C20912D4000A83409 /* SwatchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597541B20912D4000A83409 /* SwatchCell.swift */; };
+		B597541E20912FCC00A83409 /* SwatchDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597541D20912FCC00A83409 /* SwatchDetailCell.swift */; };
+		B5975420209276EB00A83409 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597541F209276EB00A83409 /* ViewControllerExtension.swift */; };
 		B59D0F0C206D9A3300732284 /* PalettesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59D0F0B206D9A3300732284 /* PalettesViewController.swift */; };
 		B5D19D1E20630B5F0013E9BE /* PaletteCreatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */; };
 		B5D19D202063F5650013E9BE /* PaletteDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */; };
@@ -64,6 +68,10 @@
 		B5743FD3205748FE00E403D3 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		B57B47BF2058959B00B77CAD /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		B57B47C12059EBD300B77CAD /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		B59754192090FB2B00A83409 /* PaletteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
+		B597541B20912D4000A83409 /* SwatchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchCell.swift; sourceTree = "<group>"; };
+		B597541D20912FCC00A83409 /* SwatchDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwatchDetailCell.swift; sourceTree = "<group>"; };
+		B597541F209276EB00A83409 /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		B59D0F0B206D9A3300732284 /* PalettesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PalettesViewController.swift; sourceTree = "<group>"; };
 		B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteCreatorViewController.swift; sourceTree = "<group>"; };
 		B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteDetailViewController.swift; sourceTree = "<group>"; };
@@ -127,10 +135,14 @@
 				B57B47C12059EBD300B77CAD /* PhotoViewController.swift */,
 				B57B47BF2058959B00B77CAD /* ImageDetailViewController.swift */,
 				B59D0F0B206D9A3300732284 /* PalettesViewController.swift */,
+				B59754192090FB2B00A83409 /* PaletteCell.swift */,
 				B5D19D1F2063F5650013E9BE /* PaletteDetailViewController.swift */,
+				B597541D20912FCC00A83409 /* SwatchDetailCell.swift */,
 				B5D19D1D20630B5F0013E9BE /* PaletteCreatorViewController.swift */,
+				B597541B20912D4000A83409 /* SwatchCell.swift */,
 				B5EAA504207ACCAB00BED796 /* UIColorExtension.swift */,
 				B5F474192081675D00525A92 /* UIImageExtension.swift */,
+				B597541F209276EB00A83409 /* ViewControllerExtension.swift */,
 				B50FBE4720534E9000DB8032 /* Main.storyboard */,
 				B50FBE4D20534E9000DB8032 /* Assets.xcassets */,
 				B50FBE4F20534E9000DB8032 /* LaunchScreen.storyboard */,
@@ -227,7 +239,7 @@
 					B50FBE3F20534E8F00DB8032 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = HBXA44666P;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					B50FBE5620534E9100DB8032 = {
 						CreatedOnToolsVersion = 8.0;
@@ -301,10 +313,14 @@
 				B50FBE4420534E9000DB8032 /* AppDelegate.swift in Sources */,
 				B5743FD22056EF9600E403D3 /* TabBarController.swift in Sources */,
 				B59D0F0C206D9A3300732284 /* PalettesViewController.swift in Sources */,
+				B597541C20912D4000A83409 /* SwatchCell.swift in Sources */,
 				B57B47C22059EBD300B77CAD /* PhotoViewController.swift in Sources */,
 				B5F4741A2081675D00525A92 /* UIImageExtension.swift in Sources */,
 				B50E612820547A86009C41BB /* CustomCollectionViewCell.swift in Sources */,
+				B597541A2090FB2B00A83409 /* PaletteCell.swift in Sources */,
 				B5743FD4205748FE00E403D3 /* CameraViewController.swift in Sources */,
+				B5975420209276EB00A83409 /* ViewControllerExtension.swift in Sources */,
+				B597541E20912FCC00A83409 /* SwatchDetailCell.swift in Sources */,
 				B5EAA505207ACCAB00BED796 /* UIColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -471,12 +487,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HBXA44666P;
 				INFOPLIST_FILE = DesignJournal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bfgreene.DesignJournal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "3d2c22f6-bfd3-4106-b115-713e7afc9e0b";
+				PROVISIONING_PROFILE_SPECIFIER = "Design Journal Profile";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -485,12 +505,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = HBXA44666P;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = DesignJournal/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bfgreene.DesignJournal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
