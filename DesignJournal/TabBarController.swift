@@ -101,7 +101,10 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         }
     }
     
-    @IBAction func unwindToTabBar(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToTabBar(segue: UIStoryboardSegue) {
+        // if sender palette creator.. check for new image tag
+    
+    }
     
 
 }

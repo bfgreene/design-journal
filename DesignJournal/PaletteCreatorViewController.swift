@@ -13,8 +13,11 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var table: UITableView!
+    @IBOutlet var instructionOverlay: UIView!
     
     var imageFromPhoto = UIImageView()
+    var fromSaveAndPalette = false
+    var firstTap = true
     
     var colors: [UIColor] = []
     @IBOutlet var addRowButton: UIButton!
@@ -33,11 +36,7 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         scrollView.maximumZoomScale = 6.0
         
         imageView.backgroundColor = UIColor.black
-        
-        
-        
 
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(withSender: )))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true
@@ -45,6 +44,9 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         table.separatorStyle = UITableViewCellSeparatorStyle.none
         addRowButton.backgroundColor = UIColor.white
 
+        instructionOverlay.alpha = 0.5
+        firstTap = true
+        
         saveButton.isEnabled = false
     }
     
@@ -53,6 +55,8 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         if gestureRecognizer.state == UIGestureRecognizerState.recognized {
             point = gestureRecognizer.location(in: gestureRecognizer.view)
         }
+        
+        if firstTap { instructionOverlay.alpha = 0.0 }
         
         addRowButton.backgroundColor = getPixelColorAtPoint(point: point!, sourceView: imageView)
     }
@@ -158,6 +162,10 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
     }
     
     @IBAction func goBack(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        if fromSaveAndPalette {
+            performSegue(withIdentifier: "unwindSegueToTabBar", sender: self)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }

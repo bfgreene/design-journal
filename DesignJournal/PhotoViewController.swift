@@ -79,7 +79,7 @@ class PhotoViewController: UIViewController {
             imageTag = tag
             goBackToTabBar(self)
         } else {
-            saveOnly = true
+            imageTag = tag
             self.performSegue(withIdentifier: "segueToPaletteCreator", sender: self)
         }
     }
@@ -116,6 +116,8 @@ class PhotoViewController: UIViewController {
         if segue.identifier == "segueToPaletteCreator",
             let nextScene = segue.destination as? PaletteCreatorViewController {
             nextScene.imageFromPhoto.image = self.imageView.image
+            if !saveOnly { nextScene.fromSaveAndPalette = true }
+            saveOnly = true
         }
         if segue.identifier == "unwindToJournal", let journalVC = segue.destination as? JournalViewController {
             journalVC.newImageTag = imageTag

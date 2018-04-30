@@ -27,6 +27,7 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
     var pathEndings = [Int]()
     var tags = [String]()
     var filteredIndexes = [Int]()
+    var totalImages = 0
     
     
     
@@ -40,6 +41,7 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
         pathEndings = UserDefaults.standard.array(forKey: "pathEndings") as? [Int] ?? [Int]()
         tags = UserDefaults.standard.stringArray(forKey: "tags") ?? [String]()
         filteredIndexes = Array(0..<tags.count)
+        totalImages = tags.count
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +57,10 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
                 newImageTag = nil
                 collectionView.reloadData()
             }
+        } else if tags.count >  totalImages && (tags[tags.count-1] == currentFilter || currentFilter == "none") {
+            filterImages(withTag: currentFilter!, withText: currentFilterText!)
         }
+        totalImages = tags.count
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -144,7 +149,7 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
     func filterImages(withTag tag: String, withText text:String) {
         styleFilterButton(withText: text)
         
-        let sv = UIViewController.displaySpinner(onView: self.view)
+        //let sv = UIViewController.displaySpinner(onView: self.view)
         
         currentFilter = tag
         currentFilterText = text
@@ -162,7 +167,7 @@ class JournalViewController: UIViewController, UICollectionViewDataSource, UICol
         if filteredIndexes.count > 0 {
             collectionView.scrollToItem(at: IndexPath(item: filteredIndexes.count-1, section: 0), at: .bottom, animated: true)
         }
-        UIViewController.removeSpinner(spinner: sv)
+       // UIViewController.removeSpinner(spinner: sv)
     }
     
     func styleFilterButton(withText text: String) {

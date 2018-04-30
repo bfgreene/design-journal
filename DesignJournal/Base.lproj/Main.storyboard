@@ -660,14 +660,31 @@
                                     <outlet property="delegate" destination="YWx-Pp-q2O" id="Urc-a2-orf"/>
                                 </connections>
                             </scrollView>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ruy-is-g75">
+                                <rect key="frame" x="0.0" y="398" width="375" height="165"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tap and zoom image to select colors" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="phA-mQ-kSB">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="phA-mQ-kSB" firstAttribute="centerX" secondItem="Ruy-is-g75" secondAttribute="centerX" id="8ig-QA-cvd"/>
+                                    <constraint firstItem="phA-mQ-kSB" firstAttribute="centerY" secondItem="Ruy-is-g75" secondAttribute="centerY" id="LFK-Sr-XFL"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3NB-BR-C01" firstAttribute="leading" secondItem="hnQ-83-xeC" secondAttribute="leading" id="0nf-MU-9Mw"/>
                             <constraint firstItem="yFg-Cm-s9Q" firstAttribute="top" secondItem="2Xh-5Y-yCt" secondAttribute="bottom" constant="8" id="8Oo-4c-Zdx"/>
+                            <constraint firstItem="Ruy-is-g75" firstAttribute="bottom" secondItem="dy7-KD-7K8" secondAttribute="bottom" id="A86-G9-tth"/>
                             <constraint firstItem="gGV-2M-KHf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hnQ-83-xeC" secondAttribute="leadingMargin" id="AOJ-st-2nY"/>
                             <constraint firstItem="uyW-qq-8IA" firstAttribute="leading" secondItem="hnQ-83-xeC" secondAttribute="leading" id="F0K-qR-vWb"/>
                             <constraint firstAttribute="trailing" secondItem="3NB-BR-C01" secondAttribute="trailing" id="Kb1-Uo-kDG"/>
+                            <constraint firstItem="Ruy-is-g75" firstAttribute="leading" secondItem="hnQ-83-xeC" secondAttribute="leading" id="Na1-9S-CV6"/>
                             <constraint firstItem="yFg-Cm-s9Q" firstAttribute="top" secondItem="gGV-2M-KHf" secondAttribute="bottom" constant="8" id="OZz-em-AqF"/>
                             <constraint firstItem="yFg-Cm-s9Q" firstAttribute="top" secondItem="uyW-qq-8IA" secondAttribute="bottom" constant="48" id="Po8-fw-Yuj"/>
                             <constraint firstItem="dy7-KD-7K8" firstAttribute="leading" secondItem="hnQ-83-xeC" secondAttribute="leading" id="RWE-kr-hNb"/>
@@ -675,15 +692,18 @@
                             <constraint firstItem="uyW-qq-8IA" firstAttribute="top" secondItem="dy7-KD-7K8" secondAttribute="bottom" id="Ysc-3Q-wU1"/>
                             <constraint firstItem="2Xh-5Y-yCt" firstAttribute="leading" secondItem="hnQ-83-xeC" secondAttribute="leading" constant="15" id="b79-iH-hAR"/>
                             <constraint firstItem="dy7-KD-7K8" firstAttribute="top" secondItem="3NB-BR-C01" secondAttribute="bottom" constant="5" id="dEV-as-YkP"/>
+                            <constraint firstAttribute="trailing" secondItem="Ruy-is-g75" secondAttribute="trailing" id="fEh-J3-oFj"/>
                             <constraint firstItem="3NB-BR-C01" firstAttribute="top" secondItem="kwt-jz-GGA" secondAttribute="bottom" id="fN6-Xr-nY6"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2Xh-5Y-yCt" secondAttribute="trailing" constant="20" symbolic="YES" id="irD-6U-X4n"/>
                             <constraint firstAttribute="trailing" secondItem="uyW-qq-8IA" secondAttribute="trailing" id="tCT-j1-gkA"/>
+                            <constraint firstItem="Ruy-is-g75" firstAttribute="top" secondItem="dy7-KD-7K8" secondAttribute="top" id="u92-sU-OTe"/>
                             <constraint firstAttribute="trailing" secondItem="dy7-KD-7K8" secondAttribute="trailing" id="uRF-t2-N5b"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="addRowButton" destination="uyW-qq-8IA" id="ziX-3f-Rt0"/>
                         <outlet property="imageView" destination="lKk-uQ-Goi" id="mw5-pP-omw"/>
+                        <outlet property="instructionOverlay" destination="Ruy-is-g75" id="K1I-MC-heQ"/>
                         <outlet property="saveButton" destination="gGV-2M-KHf" id="Cda-U1-7aU"/>
                         <outlet property="scrollView" destination="3NB-BR-C01" id="mqN-rQ-Nju"/>
                         <outlet property="table" destination="dy7-KD-7K8" id="D3I-jo-tHa"/>
