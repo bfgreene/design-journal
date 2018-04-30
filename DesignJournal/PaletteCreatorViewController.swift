@@ -34,6 +34,10 @@ class PaletteCreatorViewController: UIViewController, UIGestureRecognizerDelegat
         
         imageView.backgroundColor = UIColor.black
         
+        
+        
+
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(withSender: )))
         imageView.addGestureRecognizer(tap)
         imageView.isUserInteractionEnabled = true

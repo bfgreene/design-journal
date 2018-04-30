@@ -43,7 +43,16 @@ class PaletteDetailViewController: UIViewController, UITableViewDataSource, UITa
         cell.hexLabel.sizeToFit()
         for label in cell.rgbLabels {
             let value = " \(rgbValues[indexPath.row][label.tag])"
-            label.text?.append(value)
+            switch label.tag {
+            case 0:
+                label.text = "R: \(value)"
+            case 1:
+                label.text = "G: \(value)"
+            case 2:
+                label.text = "B: \(value)"
+            default:
+                label.text = ""
+            }
             label.sizeToFit()
         }
         

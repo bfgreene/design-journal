@@ -24,7 +24,15 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        addButton.frame = CGRect.init(x: self.tabBar.center.x - 30, y: self.view.bounds.height - 47, width: 50, height: 45)
+        
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+          //  let topPadding = window?.safeAreaInsets.top
+            let bottomPadding = window?.safeAreaInsets.bottom
+            addButton.frame = CGRect.init(x: self.tabBar.center.x - 30, y: self.view.bounds.height - (47 + bottomPadding!), width: 50, height: 45)
+        } else {
+            addButton.frame = CGRect.init(x: self.tabBar.center.x - 30, y: self.view.bounds.height - 47, width: 50, height: 45)
+        }
         addButton.layer.cornerRadius = 8
     }
     
@@ -47,8 +55,16 @@ class TabBarController: UITabBarController, UIImagePickerControllerDelegate, UIN
         alertController.addAction(cancelAction)
         alertController.addAction(cameraAction)
         alertController.addAction(photosAction)
+
+        /*
+         * Uncomment for iPad use
+        if let popoverPresentationController = alertController.popoverPresentationController {
+            popoverPresentationController.sourceView = self.view
+            popoverPresentationController.sourceRect = self.view.bounds
+        }
+        */
+        self.present(alertController, animated: true, completion: nil)
         
-        self.present(alertController, animated: true) {}
     }
    
     // Select image from photo library and go to PhotoVC
