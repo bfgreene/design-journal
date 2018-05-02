@@ -1,3 +1,5 @@
+<p align="center"> <img src="https://github.com/bfgreene/design-journal/blob/master/screenshots/DesJournalIcon.png"></p> </br>
+
 # Design Journal
 
 iOS App for Designers and Artists to gather inspiration. It's very useful to take note of things you like when 
